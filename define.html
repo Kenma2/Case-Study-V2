@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UXlyzer - Problem Definition & Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* [ALL CSS FROM INDEX.HTML - SAME STYLES] */
+        /* Including all the same CSS variables and styles from index.html */
+        
+         :root {
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a1;
+            --text-muted: #6b6b6b;
+            --background: #0a0a0a;
+            --background-secondary: #111111;
+            --background-tertiary: #1a1a1a;
+            --accent: #3b82f6;
+            --accent-light: #1e3a8a;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --border: #2a2a2a;
+            --border-light: #1f1f1f;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+        /*  ssssssssssssssssssssssssssss*/
+        
+        .sticky-next-steps {
+            position: fixed;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(40px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 20px 0;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1000;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .sticky-steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .sticky-steps-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .sticky-steps-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .steps-label {
+            color: var(--text-primary);
+        }
+        
+        .steps-arrow {
+            color: var(--accent);
+            animation: bounce 2s infinite;
+        }
+        
+        .sticky-steps-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 1;
+        }
+        
+        .sticky-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .sticky-link:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+        
+        .link-icon {
+            font-size: 16px;
+        }
+        
+        .sticky-cta {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--accent), #1e40af);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+        }
+        
+        .sticky-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        }
+        /* Bounce animation for the arrow */
+        
+        @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-4px);
+            }
+            60% {
+                transform: translateY(-2px);
+            }
+        }
+        /* Progress indicator */
+        
+        .scroll-progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 1024px) {
+            .sticky-steps-content {
+                gap: 20px;
+            }
+            .sticky-steps-links {
+                gap: 6px;
+            }
+            .sticky-link {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            .sticky-cta {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sticky-next-steps {
+                padding: 16px 0;
+            }
+            .sticky-steps-container {
+                padding: 0 20px;
+            }
+            .sticky-steps-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            .sticky-steps-text {
+                order: 1;
+            }
+            .sticky-steps-links {
+                order: 3;
+                width: 100%;
+                gap: 8px;
+            }
+            .sticky-cta {
+                order: 2;
+            }
+            .sticky-link {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sticky-steps-links {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .sticky-link {
+                min-width: auto;
+            }
+            .sticky-steps-text {
+                font-size: 13px;
+            }
+        }
+        /*fffffffffffffffffffffff*/
+        /* Navigation Styles (same as index.html) */
+        
+        .nav-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: auto;
+            max-width: 90vw;
+        }
+        
+        .nav-container {
+            background: rgba(16, 16, 16, 0.8);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .nav-container:hover::before {
+            left: 100%;
+        }
+        
+        .nav-container:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2), 0 0 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav-items {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+        
+        .nav-link.active {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.15);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        /* Section Styles */
+        
+        .section {
+            padding: 150px 0 100px;
+        }
+        
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .section-header {
+            margin-bottom: 80px;
+        }
+        
+        .section-eyebrow {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(36px, 6vw, 52px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+        
+        .section-description {
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+        /* Problem Statement */
+        
+        .problem-block {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 20px;
+            padding: 48px;
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .problem-block h3 {
+            color: var(--error);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        .problem-block p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        /* Research Grid */
+        
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 80px 0;
+        }
+        
+        .research-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .research-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .research-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .research-type {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .research-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .research-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        /* Define Section Images */
+        
+        .define-subsection {
+            margin-bottom: 80px;
+        }
+        
+        .define-image-large {
+            background: var(--background-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .define-image-large:hover {
+            border-color: var(--accent);
+            border-style: solid;
+            background: var(--background-tertiary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+        }
+        
+        .define-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 80px 0;
+        }
+        
+        .define-image-card {
+            background: var(--background-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .define-image-card:hover {
+            border-color: var(--accent);
+            border-style: solid;
+            background: var(--background-tertiary);
+        }
+        
+        .image-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .image-placeholder-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .image-caption {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        /* Feature Capability Matrix - Modern Minimalist Design */
+        
+        .capability-matrix {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 60px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .matrix-header {
+            padding: 32px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .matrix-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+        
+        .matrix-title h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .matrix-title p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .matrix-table {
+            display: grid;
+            grid-template-columns: 1fr repeat(4, 1fr);
+            width: 100%;
+        }
+        
+        .matrix-row {
+            display: contents;
+        }
+        
+        .matrix-cell {
+            padding: 20px 16px;
+            border-right: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70px;
+            transition: all 0.3s ease;
+        }
+        
+        .matrix-cell:last-child {
+            border-right: none;
+        }
+        
+        .matrix-header-row .matrix-cell {
+            background: var(--background-secondary);
+            font-weight: 600;
+        }
+        
+        .matrix-feature-header {
+            background: var(--background-tertiary) !important;
+            justify-content: flex-start !important;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-primary);
+            border-right: 2px solid var(--accent) !important;
+        }
+        
+        .matrix-platform-header {
+            flex-direction: column;
+            gap: 8px;
+            padding: 24px 16px;
+        }
+        
+        .platform-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .ux-badge {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+        
+        .mobbin-badge {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .figma-badge {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+        
+        .dribbble-badge {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+        
+        .platform-info {
+            text-align: center;
+        }
+        
+        .platform-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        
+        .platform-type {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .matrix-feature-cell {
+            background: var(--background-secondary);
+            justify-content: flex-start !important;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            border-right: 2px solid var(--border) !important;
+        }
+        
+        .matrix-capability-cell {
+            background: var(--background-tertiary);
+        }
+        
+        .matrix-capability-cell:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .capability-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .capability-indicator.supported {
+            background: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .capability-indicator.supported::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        
+        .capability-indicator.not-supported {
+            background: var(--error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        
+        .capability-indicator.not-supported::after {
+            content: '✗';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        
+        .capability-indicator:hover {
+            transform: scale(1.2);
+        }
+        /* Responsive Matrix Design */
+        
+        @media (max-width: 768px) {
+            .matrix-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .matrix-row {
+                display: grid;
+                grid-template-columns: 160px repeat(4, 100px);
+                min-width: 560px;
+            }
+            .matrix-cell {
+                padding: 16px 12px;
+                min-height: 60px;
+            }
+            .platform-badge {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .matrix-feature-cell {
+                font-size: 12px;
+            }
+            .platform-name {
+                font-size: 12px;
+            }
+            .platform-type {
+                font-size: 9px;
+            }
+            .capability-indicator {
+                width: 16px;
+                height: 16px;
+            }
+            .capability-indicator::after {
+                font-size: 10px;
+            }
+        }
+        /* Footer */
+        
+        .footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .footer-description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                left: 20px;
+                right: 20px;
+                transform: none;
+                width: auto;
+            }
+            .nav-container {
+                gap: 20px;
+                padding: 10px 20px;
+            }
+            .nav-items {
+                gap: 16px;
+            }
+            .nav-link {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .section-container {
+                padding: 0 20px;
+            }
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+            .define-images {
+                grid-template-columns: 1fr;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+        /* Animations */
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Smooth scrolling */
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Selection */
+        
+         ::selection {
+            background: var(--accent);
+            color: white;
+        }
+        
+         ::-moz-selection {
+            background: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Modern Glassy Navigation -->
+    <div class="nav-wrapper">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">UXlyzer</a>
+            <ul class="nav-items">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
+                <li class="nav-item"><a href="define.html" class="nav-link active">Define</a></li>
+                <li class="nav-item"><a href="design.html" class="nav-link">Design</a></li>
+                <li class="nav-item"><a href="learnings.html" class="nav-link">Learnings</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Define Section -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-eyebrow">02. Define</div>
+                <h2 class="section-title">Problem Definition & Analysis</h2>
+                <p class="section-description">
+                    Synthesizing research findings into clear problem statements, competitive analysis, and user experience mapping to guide solution development.
+                </p>
+            </div>
+
+            <div class="problem-block fade-in">
+                <h3>Core Problem Statement</h3>
+                <p>Designers struggle with inconsistent feedback quality rather than feedback speed, leading to extended revision cycles and decreased confidence in design decisions. Current tools optimize for workflow collaboration but lack intelligence
+                    in feedback quality assessment.</p>
+            </div>
+
+            <!-- Competitive Benchmarking -->
+            <div class="define-subsection fade-in">
+                <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">Competitive Benchmarking</h3>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 48px; line-height: 1.6;">
+                    Analysis of existing design feedback and validation tools to identify market gaps and opportunities for AI-assisted validation.
+                </p>
+
+                <!-- Feature Capability Matrix -->
+                <div class="capability-matrix fade-in">
+                    <div class="matrix-header">
+                        <div class="matrix-icon">📊</div>
+                        <div class="matrix-title">
+                            <h3>Feature Capability Matrix</h3>
+                            <p>Advanced comparison of platform capabilities across critical design validation features</p>
+                        </div>
+                    </div>
+
+                    <div class="matrix-table">
+                        <div class="matrix-row matrix-header-row">
+                            <div class="matrix-cell matrix-feature-header">Platform</div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge ux-badge">UX</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">UXlyzer</div>
+                                    <div class="platform-type">AI-POWERED</div>
+                                </div>
+                            </div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge mobbin-badge">M</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">Mobbin</div>
+                                    <div class="platform-type">DISCOVERY</div>
+                                </div>
+                            </div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge figma-badge">F</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">Figma</div>
+                                    <div class="platform-type">DESIGN TOOL</div>
+                                </div>
+                            </div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge dribbble-badge">D</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">Dribbble</div>
+                                    <div class="platform-type">PORTFOLIO</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">Rating & Feedback</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">Explore</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">AI Analysis</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">Score List</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="research-grid" style="margin-top: 60px;">
+                    <div class="research-card">
+                        <div class="research-type">Analysis</div>
+                        <h4>Current Tool Limitations</h4>
+                        <p>Existing tools like Figma, InVision, and Maze focus on workflow optimization and comment collection but provide no intelligence about feedback quality or actionability.</p>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-type">Market Gap</div>
+                        <h4>Validation Intelligence</h4>
+                        <p>No current solutions analyze feedback quality, provide design validation scoring, or offer objective design assessment capabilities.</p>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-type">Opportunity</div>
+                        <h4>AI Integration Potential</h4>
+                        <p>Opportunity exists for intelligent layer between designers and feedback providers, focusing on quality enhancement rather than workflow speed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Experience Mapping -->
+            <div class="define-subsection fade-in" style="margin-top: 120px;">
+                <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">User Experience Mapping</h3>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 48px; line-height: 1.6;">
+                    Detailed analysis of user flows, scenarios, and journey mapping to understand the complete design validation experience.
+                </p>
+
+                <div class="define-images">
+                    <div class="research-card fade-in">
+                        <div class="research-type">User Flow Analysis</div>
+                        <img src="assets/flow user s.png" alt="User Flow Analysis" style="width:100%; height: 300px; object-fit: fill;display: block;margin-left: auto;margin-right: auto;">
+                    </div>
+                    <div class="research-card fade-in">
+                        <div class="research-type">User Scenarios</div>
+                        <img src="assets/storrrrrry.png" alt="User Scenarios" style="width:100%; height: 300px; object-fit: cover;display: block;margin-left: auto;margin-right: auto;">
+                    </div>
+                    <div class="research-card fade-in">
+                        <div class="research-type">User Journey Map</div>
+                        <img src="assets/user journey.png" alt="User Journey Map" style="width:100%; height: 300px; object-fit:fill;display: block;margin-left: auto;margin-right:auto;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Insights from Analysis -->
+            <div class="research-grid" style="margin-top: 80px;">
+                <div class="research-card fade-in">
+                    <div class="research-type">User Flow Insight</div>
+                    <h4>Feedback Loop Complexity</h4>
+                    <p>Current feedback flows involve multiple stakeholders, unclear handoffs, and lack of structured validation criteria, creating confusion and delays.</p>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-type">Journey Pain Point</div>
+                    <h4>Confidence Degradation</h4>
+                    <p>Designer confidence decreases throughout the feedback journey due to subjective, contradictory, or vague responses that don't provide clear direction.</p>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-type">Scenario Analysis</div>
+                    <h4>Context-Dependent Needs</h4>
+                    <p>Different user scenarios (freelancer isolation, team collaboration, client feedback) require different types of validation support and confidence-building mechanisms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div id="footer-container"></div>
+        <div class="sticky-next-steps">
+
+
+            <!--
+                    <div class="sticky-steps-text">
+                        <span class="steps-label">Continue Exploring</span>
+                        <span class="steps-arrow">↓</span>
+                    </div>
+
+                    <div class="sticky-steps-links">
+                        <a href="research.html" class="sticky-link">
+                            <span class="link-icon">🔍</span> Research
+                        </a>
+                        
+                <a href="define.html" class="sticky-link">
+                    <span class="link-icon">📊</span>
+                    Analysis
+                </a>
+            
+                        <a href="design.html" class="sticky-link">
+                            <span class="link-icon">🎨</span> Design
+                        </a>
+                        
+                 <a href="learnings.html" class="sticky-link">
+                    <span class="link-icon">💡</span>
+                    Learnings
+                </a> 
+            
+                    </div>
+
+                    <a href="contact.html" class="sticky-cta">
+                Get in Touch
+                </a>
+                </div> 
+                -->
+        </div>
+        </div>
+    </footer>
+    <script>
+        // Load footer component
+        fetch('footer-component.html')
+            .then(response => {
+                // Check if the response is successful (status 200-299)
+                if (!response.ok) {
+                    // This will catch 404 (Not Found) and other bad responses
+                    throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Inject the footer HTML into the container
+                document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                // Log the detailed error to the console
+                console.error('Could not load the footer:', error);
+                // Provide a user-friendly fallback
+                document.getElementById('footer-container').innerHTML = `
+            <footer style="background: #0a0a0a; color: white; padding: 40px 0; text-align: center;">
+                <p>Footer could not be loaded.</p>
+            </footer>
+        `;
+            });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stickyFooter = document.querySelector('.sticky-next-steps');
+            const progressBar = document.createElement('div');
+            progressBar.className = 'scroll-progress';
+            document.body.appendChild(progressBar);
+
+            let footerVisible = false;
+            let scrollTimeout;
+
+            function updateScrollProgress() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+                // Update progress bar
+                progressBar.style.width = scrollPercent + '%';
+
+                // Show/hide footer based on scroll position
+                const nearBottom = scrollPercent > 85; // Show when 85% scrolled
+
+                if (nearBottom && !footerVisible) {
+                    stickyFooter.classList.add('visible');
+                    footerVisible = true;
+                } else if (!nearBottom && footerVisible) {
+                    stickyFooter.classList.remove('visible');
+                    footerVisible = false;
+                }
+            }
+
+            // Throttled scroll event
+            window.addEventListener('scroll', function() {
+                if (!scrollTimeout) {
+                    scrollTimeout = setTimeout(function() {
+                        updateScrollProgress();
+                        scrollTimeout = null;
+                    }, 50);
+                }
+            });
+
+            // Initial check
+            updateScrollProgress();
+
+            // Also check on resize
+            window.addEventListener('resize', updateScrollProgress);
+
+            // Add click handler for smooth scrolling to top when clicking on links
+            document.querySelectorAll('.sticky-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Remove visible class when navigating
+                    stickyFooter.classList.remove('visible');
+                    footerVisible = false;
+                });
+            });
+
+            console.log('Sticky footer loaded - ready to guide users!');
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Enhanced card hover effects
+            document.querySelectorAll('.research-card, .define-image-card, .capability-indicator').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    if (this.classList.contains('capability-indicator')) {
+                        this.style.transform = 'scale(1.2)';
+                    } else {
+                        this.style.transform = 'translateY(-8px)';
+                    }
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    if (this.classList.contains('capability-indicator')) {
+                        this.style.transform = 'scale(1)';
+                    }
+                });
+            });
+
+            // Navigation glassmorphism enhancement on scroll
+            const nav = document.querySelector('.nav-container');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    nav.style.background = 'rgba(10, 10, 10, 0.9)';
+                    nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                } else {
+                    nav.style.background = 'rgba(16, 16, 16, 0.8)';
+                    nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                }
+            });
+
+            // Enhanced accessibility
+            document.querySelectorAll('a, button, [tabindex]').forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.style.outline = '2px solid var(--accent)';
+                    this.style.outlineOffset = '2px';
+                    this.style.borderRadius = '4px';
+                });
+
+                element.addEventListener('blur', function() {
+                    this.style.outline = 'none';
+                });
+            });
+
+            console.log('UXlyzer Define - Anas Albaloshi');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,440 @@
+<footer class="professional-footer">
+    <div class="professional-footer-container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3 class="brand-name">Anas Albaloshi</h3>
+                <p class="brand-title">UX/UI Designer</p>
+                <p class="brand-description">Passionate about creating intuitive user experiences through research-driven design and innovative validation methods. Currently exploring AI-assisted design tools and their impact on the design process.</p>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Project</h4>
+                <div class="footer-column-links">
+                    <a href="index.html" class="footer-column-link">
+                        Home
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                    <a href="research.html" class="footer-column-link">
+                        Research
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                    <a href="define.html" class="footer-column-link">
+                        Define
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                    <a href="design.html" class="footer-column-link">
+                        Design
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                    <a href="learnings.html" class="footer-column-link">
+                        Learnings
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Connect</h4>
+                <div class="footer-column-links">
+                    <a href="mailto:anasalbloshii@gmail.com" class="footer-column-link">
+                        Email
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/anasalbloshi/" class="footer-column-link" target="_blank">
+                        LinkedIn
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                    <a href="contact.html" class="footer-column-link">
+                        Contact Page
+                        <span class="footer-column-link-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Contact</h4>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/in/anasalbloshi/" class="footer-social-link" target="_blank" aria-label="LinkedIn">
+                        <img src="assets/linkedin.svg" alt="LinkedIn" width="24" height="24">
+                    </a>
+                    <a href="mailto:anasalbloshii@gmail.com" class="footer-social-link" aria-label="Email">
+                        <img src="assets/gmail.svg" alt="Gmail" width="24" height="24">
+                    </a>
+                    <a href="https://wa.me/+966531642561" class="footer-social-link" aria-label="WhatsApp">
+                        <img src="assets/whatsapp.svg" alt="Whatsapp" width="24" height="24">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p class="footer-copyright">© 2025 Anas Albaloshi. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Privacy</a>
+                    <a href="#" class="footer-bottom-link">Terms</a>
+                    <a href="contact.html" class="footer-bottom-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* COPY ALL THE CSS FROM YOUR footer.html FILE HERE */
+    /* Paste everything from :root to the end of the media queries */
+    
+     :root {
+        --text-primary: #ffffff;
+        --text-secondary: #a1a1a1;
+        --text-muted: #6b6b6b;
+        --background: #0a0a0a;
+        --background-secondary: #111111;
+        --accent: #3b82f6;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --border: #2a2a2a;
+        --success: #10b981;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .professional-footer {
+        background: var(--background);
+        position: relative;
+        overflow: hidden;
+        margin-top: auto;
+        padding: 80px 0 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: var(--text-primary);
+    }
+    
+    .professional-footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+        position: relative;
+        z-index: 1;
+    }
+    /* Footer Grid */
+    
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 80px;
+        padding: 80px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .footer-brand {
+        max-width: 400px;
+    }
+    
+    .footer-brand .brand-name {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .footer-brand .brand-title {
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .footer-brand .brand-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 15px;
+        margin-bottom: 32px;
+    }
+    /* Footer Column */
+    
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .footer-column-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .footer-column-links {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .footer-column-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        width: fit-content;
+    }
+    
+    .footer-column-link::before {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        transition: width 0.3s ease;
+    }
+    
+    .footer-column-link:hover::before {
+        width: 100%;
+    }
+    
+    .footer-column-link:hover {
+        color: var(--accent);
+        transform: translateX(4px);
+    }
+    
+    .footer-column-link-arrow {
+        opacity: 0;
+        transform: translateX(-4px);
+        transition: all 0.3s ease;
+        font-size: 12px;
+    }
+    
+    .footer-column-link:hover .footer-column-link-arrow {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    /* Social Links */
+    
+    .footer-social {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    
+    .footer-social-link {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .footer-social-link::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--accent), #1e40af);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .footer-social-link:hover::before {
+        opacity: 1;
+    }
+    
+    .footer-social-link img {
+        position: relative;
+        z-index: 1;
+        filter: brightness(0.8);
+        transition: filter 0.3s ease;
+    }
+    
+    .footer-social-link:hover img {
+        filter: brightness(1);
+    }
+    
+    .footer-social-link:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+    /* Footer Bottom */
+    
+    .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 32px 0;
+    }
+    
+    .footer-bottom-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 20px;
+    }
+    
+    .footer-copyright {
+        color: var(--text-muted);
+        font-size: 14px;
+        white-space: nowrap;
+    }
+    
+    .footer-bottom-links {
+        display: flex;
+        gap: 32px;
+    }
+    
+    .footer-bottom-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        white-space: nowrap;
+    }
+    
+    .footer-bottom-link:hover {
+        color: var(--accent);
+    }
+    /* Copy Notification */
+    
+    .copy-notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--success);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 1000;
+    }
+    
+    .copy-notification.show {
+        transform: translateX(-50%) translateY(0);
+    }
+    /* Responsive Design */
+    
+    @media (max-width: 1024px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+        .footer-brand {
+            grid-column: 1 / -1;
+            max-width: 100%;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .professional-footer {
+            padding: 60px 0 0;
+        }
+        .professional-footer-container {
+            padding: 0 20px;
+        }
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 60px 0;
+        }
+        .footer-bottom-content {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+        .footer-bottom-links {
+            gap: 20px;
+        }
+        .footer-copyright,
+        .footer-bottom-link {
+            white-space: normal;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .footer-brand .brand-name {
+            font-size: 28px;
+        }
+        .footer-social {
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    // COPY ALL THE JAVASCRIPT FROM YOUR footer.html FILE HERE
+    // Paste the copyPhoneNumber and showCopyNotification functions
+    function copyPhoneNumber() {
+        const phoneNumber = '+966 53 164 2561';
+
+        navigator.clipboard.writeText(phoneNumber).then(() => {
+            showCopyNotification('Phone number copied to clipboard!');
+        }).catch(() => {
+            const textArea = document.createElement('textarea');
+            textArea.value = phoneNumber;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showCopyNotification('Phone number copied to clipboard!');
+        });
+    }
+
+    function showCopyNotification(message) {
+        const existingNotification = document.querySelector('.copy-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        const notification = document.createElement('div');
+        notification.className = 'copy-notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 400);
+        }, 3000);
+    }
+
+    // Add click handler for phone number copy if needed
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneElement = document.querySelector('[onclick="copyPhoneNumber()"]');
+        if (phoneElement) {
+            phoneElement.addEventListener('click', copyPhoneNumber);
+        }
+    });
+</script>

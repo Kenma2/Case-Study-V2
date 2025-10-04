@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UXlyzer - Solution Design & Development</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* [ALL CSS FROM INDEX.HTML - SAME STYLES] */
+        /* Including all the same CSS variables and styles from index.html */
+        
+         :root {
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a1;
+            --text-muted: #6b6b6b;
+            --background: #0a0a0a;
+            --background-secondary: #111111;
+            --background-tertiary: #1a1a1a;
+            --accent: #3b82f6;
+            --accent-light: #1e3a8a;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --border: #2a2a2a;
+            --border-light: #1f1f1f;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+        
+        .sticky-next-steps {
+            position: fixed;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(40px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 20px 0;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1000;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+        /* Navigation Styles (same as index.html) */
+        
+        .nav-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: auto;
+            max-width: 90vw;
+        }
+        
+        .nav-container {
+            background: rgba(16, 16, 16, 0.8);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .nav-container:hover::before {
+            left: 100%;
+        }
+        
+        .nav-container:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2), 0 0 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav-items {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+        
+        .nav-link.active {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.15);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        /* Section Styles */
+        
+        .section {
+            padding: 150px 0 100px;
+        }
+        
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .section-header {
+            margin-bottom: 80px;
+        }
+        
+        .section-eyebrow {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(36px, 6vw, 52px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+        
+        .section-description {
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+        /* Research Grid */
+        
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 80px 0;
+        }
+        
+        .research-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .research-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .research-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .research-type {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .research-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .research-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        /* Design Phase */
+        
+        .design-phase {
+            margin-bottom: 100px;
+        }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 48px;
+            gap: 24px;
+        }
+        
+        .phase-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), #1e40af);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .phase-content h3 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .phase-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .design-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+        
+        .design-item {
+            background: var(--background-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .design-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .design-placeholder {
+            width: 100%;
+            height: 300px;
+            background: var(--background-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .design-caption {
+            padding: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        /* Technical Reality */
+        
+        .reality-check {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .reality-check h4 {
+            color: var(--warning);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .reality-check p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        /* Footer */
+        
+        .footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .footer-description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                left: 20px;
+                right: 20px;
+                transform: none;
+                width: auto;
+            }
+            .nav-container {
+                gap: 20px;
+                padding: 10px 20px;
+            }
+            .nav-items {
+                gap: 16px;
+            }
+            .nav-link {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .section-container {
+                padding: 0 20px;
+            }
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+            .phase-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            .design-showcase {
+                grid-template-columns: 1fr;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+        /* Animations */
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Smooth scrolling */
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Selection */
+        
+         ::selection {
+            background: var(--accent);
+            color: white;
+        }
+        
+         ::-moz-selection {
+            background: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Modern Glassy Navigation -->
+    <div class="nav-wrapper">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-brand">UXlyzer</a>
+            <ul class="nav-items">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
+                <li class="nav-item"><a href="define.html" class="nav-link">Define</a></li>
+                <li class="nav-item"><a href="design.html" class="nav-link active">Design</a></li>
+                <li class="nav-item"><a href="learnings.html" class="nav-link">Learnings</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Design Section -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-eyebrow">03. Design</div>
+                <h2 class="section-title">Solution Development</h2>
+                <p class="section-description">
+                    From initial sketches to refined prototypes, exploring how AI-assisted validation might work in practice.
+                </p>
+            </div>
+
+            <!-- Lo-Fi Sketches -->
+            <div class="design-phase fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">✏️</div>
+                    <div class="phase-content">
+                        <h3>Lo-Fi Sketches</h3>
+                        <p>Initial exploration of how AI feedback integration might work within existing design tools and workflows.</p>
+                    </div>
+                </div>
+                <div class="design-showcase">
+                    <div class="design-item">
+                        <img src="assets/sk1.png" alt="Initial concept sketches" style="width:inherit; height: 300px; object-fit: cover;display: block;margin-left: auto;margin-right: auto;">
+                        <div class="design-caption">Initial concept sketches</div>
+                    </div>
+                    <div class="design-item">
+                        <img src="assets/sk2.png" alt="User flow explorations" style="width:inherit; height: 300px; object-fit: cover;display: block;margin-left: auto;margin-right: auto;">
+                        <div class="design-caption">Initial concept sketches</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wireframes -->
+            <div class="design-phase fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">📐</div>
+                    <div class="phase-content">
+                        <h3>Wireframes</h3>
+                        <p>Structured layouts exploring information hierarchy and user interface patterns for AI feedback integration.</p>
+                    </div>
+                </div>
+                <div class="design-showcase">
+                    <div class="design-item">
+                        <img src="assets/wr2.png" alt="Core interface wireframes" style="width:inherit; height: 300px; object-fit: cover;display: block;margin-left: auto;margin-right: auto;">
+                        <div class="design-caption">interface wireframes</div>
+                    </div>
+                    <div class="design-item">
+                        <img src="assets/wr1.png" alt="Detailed wireframe layouts" style="width:inherit; height: 300px; object-fit: cover;display: block;margin-left: auto;margin-right: auto;">
+                        <div class="design-caption">Detailed wireframe layouts</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hi-Fi Prototype -->
+            <div class="design-phase fade-in">
+                <div class="phase-header">
+                    <div class="phase-icon">🎨</div>
+                    <div class="phase-content">
+                        <h3>Hi-Fi Prototype</h3>
+                        <p>Polished interface design exploring visual design and interaction patterns for the AI validation concept.</p>
+                    </div>
+                </div>
+                <div class="design-showcase">
+                    <div class="design-item">
+                        <a href="https://www.figma.com/proto/d02NfxgLpwYmlGDF4dvoai/UX-Analyze?page-id=0%3A1&node-id=368-1148&viewport=2602%2C-2761%2C0.39&t=SpmU728yelLCKfCt-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=404%3A2139 " target="_blank" style="text-decoration: none;">
+                            <img src="assets/Main Page (For you) V2.png" alt="High-fidelity prototype screens" style="width:inherit; height: 300px; object-fit: cover;display: block;margin-left: auto;margin-right: auto;">
+                        </a>
+                        <div class="design-caption">High-fidelity prototype screens</div>
+                    </div>
+                </div>
+
+                <div class="reality-check fade-in">
+                    <h4>Technical Reality Check</h4>
+                    <p>Current AI cannot reliably evaluate subjective design quality, user flow effectiveness, or brand alignment. This concept assumes future AI capabilities that don't exist yet.</p>
+                </div>
+            </div>
+
+            <div class="research-grid">
+                <div class="research-card fade-in">
+                    <div class="research-type">Design Decision</div>
+                    <h4>Objective Metrics First</h4>
+                    <p>Focused on measurable aspects AI can actually evaluate: accessibility compliance, color contrast ratios, and basic usability heuristics.</p>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-type">User Feedback</div>
+                    <h4>Concept Reception</h4>
+                    <p>Designers appreciated the problem focus but questioned whether AI could provide the nuanced feedback they actually need for design decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer Container -->
+
+    <div id="footer-container"></div>
+    <!--Progress Bar-->
+    <div class="sticky-next-steps"></div>
+
+    <script>
+        // Load footer component
+        fetch('footer-component.html')
+            .then(response => {
+                // Check if the response is successful (status 200-299)
+                if (!response.ok) {
+                    // This will catch 404 (Not Found) and other bad responses
+                    throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                // Inject the footer HTML into the container
+                document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                // Log the detailed error to the console
+                console.error('Could not load the footer:', error);
+                // Provide a user-friendly fallback
+                document.getElementById('footer-container').innerHTML = `
+            <footer style="background: #0a0a0a; color: white; padding: 40px 0; text-align: center;">
+                <p>Footer could not be loaded.</p>
+            </footer>
+        `;
+            });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Enhanced card hover effects
+            document.querySelectorAll('.research-card, .design-item').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Navigation glassmorphism enhancement on scroll
+            const nav = document.querySelector('.nav-container');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    nav.style.background = 'rgba(10, 10, 10, 0.9)';
+                    nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                } else {
+                    nav.style.background = 'rgba(16, 16, 16, 0.8)';
+                    nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                }
+            });
+
+            // Enhanced accessibility
+            document.querySelectorAll('a, button, [tabindex]').forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.style.outline = '2px solid var(--accent)';
+                    this.style.outlineOffset = '2px';
+                    this.style.borderRadius = '4px';
+                });
+
+                element.addEventListener('blur', function() {
+                    this.style.outline = 'none';
+                });
+            });
+
+            console.log('UXlyzer Design - Anas Albaloshi');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stickyFooter = document.querySelector('.sticky-next-steps');
+            const progressBar = document.createElement('div');
+            progressBar.className = 'scroll-progress';
+            document.body.appendChild(progressBar);
+
+            let footerVisible = false;
+            let scrollTimeout;
+
+            function updateScrollProgress() {
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+                // Update progress bar
+                progressBar.style.width = scrollPercent + '%';
+
+                // Show/hide footer based on scroll position
+                const nearBottom = scrollPercent > 85; // Show when 85% scrolled
+
+                if (nearBottom && !footerVisible) {
+                    stickyFooter.classList.add('visible');
+                    footerVisible = true;
+                } else if (!nearBottom && footerVisible) {
+                    stickyFooter.classList.remove('visible');
+                    footerVisible = false;
+                }
+            }
+
+            // Throttled scroll event
+            window.addEventListener('scroll', function() {
+                if (!scrollTimeout) {
+                    scrollTimeout = setTimeout(function() {
+                        updateScrollProgress();
+                        scrollTimeout = null;
+                    }, 50);
+                }
+            });
+
+            // Initial check
+            updateScrollProgress();
+
+            // Also check on resize
+            window.addEventListener('resize', updateScrollProgress);
+
+            // Add click handler for smooth scrolling to top when clicking on links
+            document.querySelectorAll('.sticky-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Remove visible class when navigating
+                    stickyFooter.classList.remove('visible');
+                    footerVisible = false;
+                });
+            });
+
+            console.log('Sticky footer loaded - ready to guide users!');
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Enhanced card hover effects
+            document.querySelectorAll('.research-card, .define-image-card, .capability-indicator').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    if (this.classList.contains('capability-indicator')) {
+                        this.style.transform = 'scale(1.2)';
+                    } else {
+                        this.style.transform = 'translateY(-8px)';
+                    }
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    if (this.classList.contains('capability-indicator')) {
+                        this.style.transform = 'scale(1)';
+                    }
+                });
+            });
+
+            // Navigation glassmorphism enhancement on scroll
+            const nav = document.querySelector('.nav-container');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    nav.style.background = 'rgba(10, 10, 10, 0.9)';
+                    nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                } else {
+                    nav.style.background = 'rgba(16, 16, 16, 0.8)';
+                    nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                }
+            });
+
+            // Enhanced accessibility
+            document.querySelectorAll('a, button, [tabindex]').forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.style.outline = '2px solid var(--accent)';
+                    this.style.outlineOffset = '2px';
+                    this.style.borderRadius = '4px';
+                });
+
+                element.addEventListener('blur', function() {
+                    this.style.outline = 'none';
+                });
+            });
+
+            console.log('UXlyzer Define - Anas Albaloshi');
+        });
+    </script>
+</body>
+
+</html>
