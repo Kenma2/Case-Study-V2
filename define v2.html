@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UXlyzer - Problem Definition & Analysis</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
+        /* [ALL CSS FROM INDEX.HTML - SAME STYLES] */
+        /* Including all the same CSS variables and styles from index.html */
+        
+         :root {
             --text-primary: #ffffff;
             --text-secondary: #a1a1a1;
             --text-muted: #6b6b6b;
@@ -42,8 +46,173 @@
             font-size: 16px;
             overflow-x: hidden;
         }
+        /*  ssssssssssssssssssssssssssss*/
+        
+        .sticky-next-steps {
+            position: fixed;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(40px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 20px 0;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1000;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .sticky-steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .sticky-steps-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .sticky-steps-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .steps-label {
+            color: var(--text-primary);
+        }
+        
+        .steps-arrow {
+            color: var(--accent);
+            animation: bounce 2s infinite;
+        }
+        
+        .sticky-steps-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 1;
+        }
+        
+        .sticky-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .sticky-link:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+        }
+        
+        .link-icon {
+            font-size: 16px;
+        }
+        
+        .sticky-cta {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--accent), #1e40af);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+        }
+        
+        .sticky-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        }
+        /* Bounce animation for the arrow */
+        
+        @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-4px);
+            }
+            60% {
+                transform: translateY(-2px);
+            }
+        }
+        /* Progress indicator */
+        
+        .scroll-progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 1024px) {
+            .sticky-steps-content {
+                gap: 20px;
+            }
+            .sticky-steps-links {
+                gap: 6px;
+            }
+            .sticky-link {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            .sticky-cta {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+        }
+        
 
-        /* Navigation Styles */
+        /* TEMPORARY: Force mobile menu to show for testing */
+        @media (max-width: 480px) {
+            .sticky-steps-links {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .sticky-link {
+                min-width: auto;
+            }
+            .sticky-steps-text {
+                font-size: 13px;
+            }
+        }
+        /*fffffffffffffffffffffff*/
+        /* Navigation Styles (same as index.html) */
+        
         .nav-wrapper {
             position: fixed;
             top: 20px;
@@ -137,6 +306,7 @@
             background: rgba(59, 130, 246, 0.15);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
+        /* Hide hamburger on desktop */
         
         .nav-hamburger {
             display: none;
@@ -158,8 +328,8 @@
         .nav-hamburger:hover {
             background: rgba(59, 130, 246, 0.1);
         }
-
         /* Section Styles */
+        
         .section {
             padding: 150px 0 100px;
         }
@@ -198,7 +368,8 @@
             line-height: 1.6;
             max-width: 700px;
         }
-
+        /* Problem Statement */
+        
         .problem-block {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -220,7 +391,8 @@
             color: var(--text-secondary);
             line-height: 1.7;
         }
-
+        /* Research Grid */
+        
         .research-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -286,94 +458,1361 @@
             margin-bottom: 20px;
             line-height: 1.6;
         }
-
-        /* Mobile Navigation Styles - FIXED */
+        /* Define Section Images */
+        
+        .define-subsection {
+            margin-bottom: 80px;
+        }
+        
+        .define-image-large {
+            background: var(--background-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .define-image-large:hover {
+            border-color: var(--accent);
+            border-style: solid;
+            background: var(--background-tertiary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+        }
+        
+        .define-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 80px 0;
+        }
+        
+        .define-image-card {
+            background: var(--background-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .define-image-card:hover {
+            border-color: var(--accent);
+            border-style: solid;
+            background: var(--background-tertiary);
+        }
+        
+        .image-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .image-placeholder-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .image-caption {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        /* Feature Capability Matrix - Modern Minimalist Design */
+        
+        .capability-matrix {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 60px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .matrix-header {
+            padding: 32px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .matrix-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+        
+        .matrix-title h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .matrix-title p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .matrix-table {
+            display: grid;
+            grid-template-columns: 1fr repeat(4, 1fr);
+            width: 100%;
+        }
+        
+        .matrix-row {
+            display: contents;
+        }
+        
+        .matrix-cell {
+            padding: 20px 16px;
+            border-right: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70px;
+            transition: all 0.3s ease;
+        }
+        
+        .matrix-cell:last-child {
+            border-right: none;
+        }
+        
+        .matrix-header-row .matrix-cell {
+            background: var(--background-secondary);
+            font-weight: 600;
+        }
+        
+        .matrix-feature-header {
+            background: var(--background-tertiary) !important;
+            justify-content: flex-start !important;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-primary);
+            border-right: 2px solid var(--accent) !important;
+        }
+        
+        .matrix-platform-header {
+            flex-direction: column;
+            gap: 8px;
+            padding: 24px 16px;
+        }
+        
+        .platform-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .ux-badge {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+        
+        .mobbin-badge {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .figma-badge {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+        
+        .dribbble-badge {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+        
+        .platform-info {
+            text-align: center;
+        }
+        
+        .platform-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        
+        .platform-type {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .matrix-feature-cell {
+            background: var(--background-secondary);
+            justify-content: flex-start !important;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            border-right: 2px solid var(--border) !important;
+        }
+        
+        .matrix-capability-cell {
+            background: var(--background-tertiary);
+        }
+        
+        .matrix-capability-cell:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .capability-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .capability-indicator.supported {
+            background: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .capability-indicator.supported::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        
+        .capability-indicator.not-supported {
+            background: var(--error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        
+        .capability-indicator.not-supported::after {
+            content: '✗';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        
+        .capability-indicator:hover {
+            transform: scale(1.2);
+        }
+        /* Responsive Matrix Design */
+        
         @media (max-width: 768px) {
-            .nav-wrapper {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                right: 20px;
-                transform: none;
-                width: auto;
-                max-width: none;
-                z-index: 1000;
+            .sticky-next-steps {
+                padding: 16px 0;
             }
-            
-            .nav-container {
-                justify-content: space-between;
-                padding: 12px 20px;
-                gap: 0;
-                position: relative;
-            }
-            
-            .nav-hamburger {
-                display: flex;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
-            
-            .nav-items {
-                display: none;
-                position: fixed;
-                top: 80px;
-                left: 20px;
-                right: 20px;
-                background: rgba(16, 16, 16, 0.98);
-                backdrop-filter: blur(40px);
-                -webkit-backdrop-filter: blur(40px);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                border-radius: 20px;
-                padding: 24px;
-                margin: 0;
-                flex-direction: column;
-                gap: 12px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-                z-index: 1001;
-                max-height: calc(100vh - 120px);
-                overflow-y: auto;
-            }
-            
-            .nav-items.mobile-open {
-                display: flex !important;
-            }
-            
-            .nav-item {
-                width: 100%;
-            }
-            
-            .nav-link {
-                display: block;
-                padding: 16px 20px;
-                border-radius: 12px;
-                text-align: center;
-                font-size: 16px;
-                font-weight: 500;
-                width: 100%;
-                transition: all 0.3s ease;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                color: var(--text-secondary);
-            }
-            
-            .nav-link:hover,
-            .nav-link.active {
-                background: rgba(59, 130, 246, 0.2);
-                color: var(--accent);
-                border-color: rgba(59, 130, 246, 0.3);
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-                transform: translateY(-2px);
-            }
-            
-            .section-container {
+            .sticky-steps-container {
                 padding: 0 20px;
             }
-            
-            .research-grid {
+            .sticky-steps-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+            .sticky-steps-text {
+                order: 1;
+            }
+            .sticky-steps-links {
+                order: 3;
+                width: 100%;
+                gap: 8px;
+            }
+            .sticky-cta {
+                order: 2;
+            }
+            .sticky-link {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            .nav-wrapper {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        transform: none;
+        width: auto;
+        max-width: none;
+        z-index: 1000;
+    }
+    
+    .nav-container {
+        justify-content: space-between;
+        padding: 12px 20px;
+        gap: 0;
+        position: relative;
+    }
+    
+    /* Show hamburger on mobile */
+    .nav-hamburger {
+        display: flex;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Hide nav items by default */
+    .nav-items {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 20px;
+        right: 20px;
+        background: rgba(16, 16, 16, 0.98);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        padding: 24px;
+        margin: 0;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        z-index: 1001;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        transition: all 0.3s ease;
+    }
+    
+    /* Show menu when toggled */
+    .nav-items.mobile-open {
+        display: flex !important;
+    }
+    
+    .nav-item {
+        width: 100%;
+    }
+    
+    .nav-link {
+        display: block;
+        padding: 16px 20px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        width: 100%;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-secondary);
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(59, 130, 246, 0.2);
+        color: var(--accent);
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    /* Responsive adjustments for other sections */
+    .section-container {
+        padding: 0 20px;
+    }
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
+    .define-images {
+        grid-template-columns: 1fr;
+    }
+    .footer-links {
+        flex-direction: column;
+        gap: 16px;
+    }
+            .scenarios-card,
+            .flow-card,
+            .journey-card {
+                padding: 24px;
+            }
+            .scenario-item {
+                padding: 20px;
+            }
+            .scenario-statement {
+                padding-left: 0;
+            }
+            .persona-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            .persona-role {
+                font-size: 14px;
+            }
+            .statement-text {
+                font-size: 14px;
+            }
+            .flow-path {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .flow-step {
+                width: 100%;
+                justify-content: center;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+                align-self: center;
+            }
+            .flow-path:hover .flow-arrow {
+                transform: rotate(90deg) translateX(4px);
+            }
+            .journey-grid {
+                grid-template-columns: 1fr;
+            }
+            .stage-card {
+                padding: 24px;
+            }
+            .matrix-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .matrix-row {
+                display: grid;
+                grid-template-columns: 160px repeat(4, 100px);
+                min-width: 560px;
+            }
+            .matrix-cell {
+                padding: 16px 12px;
+                min-height: 60px;
+            }
+            .platform-badge {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .matrix-feature-cell {
+                font-size: 12px;
+            }
+            .platform-name {
+                font-size: 12px;
+            }
+            .platform-type {
+                font-size: 9px;
+            }
+            .capability-indicator {
+                width: 16px;
+                height: 16px;
+            }
+            .capability-indicator::after {
+                font-size: 10px;
+            }
+        }
+        /* Footer */
+        
+        .footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .footer-description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        /* Integrated Components Styles */
+        /* User Scenarios Component */
+        
+        .scenarios-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            margin: 0 auto;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scenarios-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .scenarios-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .scenarios-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .scenarios-header {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .scenarios-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .scenario-item {
+            background: var(--background-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scenario-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--accent), #1e40af);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .scenario-item:hover {
+            background: var(--background-tertiary);
+            border-color: var(--accent);
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+        }
+        
+        .scenario-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .scenario-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .scenario-persona {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .persona-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .expert-avatar {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .beginner-avatar {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .freelancer-avatar {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .persona-info {
+            flex: 1;
+        }
+        
+        .persona-role {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .persona-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .expert-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .beginner-badge {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .freelancer-badge {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .scenario-statement {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 60px;
+        }
+        
+        .statement-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .statement-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .statement-highlight {
+            font-weight: 600;
+            color: var(--accent);
+            padding: 2px 8px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 6px;
+        }
+        
+        .statement-goal {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        /* User Flow Analysis Component */
+        
+        .flow-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            margin: 0 auto;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .flow-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .flow-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .flow-header {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .flow-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .flow-section {
+            margin-bottom: 40px;
+        }
+        
+        .flow-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .flow-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .flow-section-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .flow-path {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 16px;
+            background: var(--background-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--background-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .flow-step:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        
+        .step-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .flow-arrow {
+            color: var(--text-muted);
+            font-size: 18px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-path:hover .flow-arrow {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+        
+        .flow-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 32px 0;
+        }
+        /* User Journey Map Component */
+        
+        .journey-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            margin: 0 auto;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .journey-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .journey-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .journey-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .journey-header {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+        
+        .journey-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        
+        .stage-card {
+            background: var(--background-secondary);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stage-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #1e40af);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .stage-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .stage-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .card-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .stage-card:hover .card-number {
+            transform: scale(1.1);
+        }
+        
+        .card-number.blue {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .card-number.green {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .card-number.purple {
+            background: #8b5cf6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Task Flow */
+        
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--background-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .task-item:hover {
+            background: rgba(59, 130, 246, 0.05);
+            border-color: var(--accent);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+        
+        .task-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .task-dot.green {
+            background: var(--success);
+        }
+        
+        .task-dot.blue {
+            background: var(--accent);
+        }
+        
+        .task-dot.purple {
+            background: #8b5cf6;
+        }
+        
+        .task-dot.yellow {
+            background: var(--warning);
+        }
+        
+        .task-dot.red {
+            background: var(--error);
+        }
+        
+        .task-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        /* User Feeling */
+        
+        .feeling-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+        
+        .feeling-icon {
+            font-size: 64px;
+            margin-bottom: 8px;
+        }
+        
+        .feeling-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 12px;
+        }
+        
+        .feeling-badge {
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--success);
+        }
+        
+        .metrics {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+        
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .metric-dots {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .dot.yellow-filled {
+            background: var(--warning);
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+        }
+        
+        .dot.yellow-empty {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .dot.blue-filled {
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+        }
+        
+        .dot.blue-empty {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        /* Opportunity */
+        
+        .opportunity-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+        
+        .opportunity-icon {
+            font-size: 64px;
+            margin-bottom: 8px;
+        }
+        
+        .opportunity-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-bottom: 12px;
+        }
+        
+        .feature-badge {
+            padding: 12px 20px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .stage-card:hover .feature-badge {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+        
+        .performance-metrics {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .performance-item {
+            background: var(--background-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .performance-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+        
+        .performance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .performance-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .performance-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .performance-value.yellow {
+            color: var(--warning);
+        }
+        
+        .performance-value.green {
+            color: var(--success);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+        
+        .progress-fill.yellow {
+            background: linear-gradient(90deg, var(--warning), #d97706);
+            width: 60%;
+        }
+        
+        .progress-fill.green {
+            background: linear-gradient(90deg, var(--success), #059669);
+            width: 85%;
+        }
+        /* Animations for Integrated Components */
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .scenario-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .scenario-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .scenario-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .scenario-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .flow-section {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .flow-section:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .flow-section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .stage-card {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .stage-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .stage-card:nth-child(2) {
+            animation-delay: 0.25s;
+        }
+        
+        .stage-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        /* Responsive aaaaaaaaaaaaaaaaaa Design for Integrated Components */
+        
+        
+        @media (max-width: 1024px) {
+            .journey-grid {
                 grid-template-columns: 1fr;
             }
         }
+        /* Mobile Navigation Styles */
+        
+        /* Mobile Navigation Styles - COMPLETE FIX */
 
+        /* Animations */
+        
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -384,26 +1823,37 @@
             opacity: 1;
             transform: translateY(0);
         }
-
+        /* Smooth scrolling */
+        
         html {
             scroll-behavior: smooth;
         }
-
-        ::selection {
+        /* Selection */
+        
+         ::selection {
+            background: var(--accent);
+            color: white;
+        }
+        
+         ::-moz-selection {
             background: var(--accent);
             color: white;
         }
     </style>
 </head>
+
 <body>
+    <!-- Modern Glassy Navigation -->
     <div class="nav-wrapper">
         <nav class="nav-container">
             <a href="index.html" class="nav-brand">UXlyzer</a>
 
+            <!-- Hamburger Button - Hidden on desktop, visible on mobile -->
             <button class="nav-hamburger" aria-label="Toggle navigation menu">
                 <span class="hamburger-icon">☰</span>
             </button>
 
+            <!-- Regular Navigation Items - Visible on desktop, hidden on mobile until opened -->
             <ul class="nav-items">
                 <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
@@ -415,6 +1865,7 @@
         </nav>
     </div>
 
+    <!-- Define Section -->
     <section class="section">
         <div class="section-container">
             <div class="section-header fade-in">
@@ -427,115 +1878,669 @@
 
             <div class="problem-block fade-in">
                 <h3>Core Problem Statement</h3>
-                <p>Designers struggle with inconsistent feedback quality rather than feedback speed, leading to extended revision cycles and decreased confidence in design decisions. Current tools optimize for workflow collaboration but lack intelligence in feedback quality assessment.</p>
+                <p>Designers struggle with inconsistent feedback quality rather than feedback speed, leading to extended revision cycles and decreased confidence in design decisions. Current tools optimize for workflow collaboration but lack intelligence
+                    in feedback quality assessment.</p>
             </div>
 
-            <div class="research-grid">
-                <div class="research-card fade-in">
-                    <div class="research-type">Analysis</div>
-                    <h4>Current Tool Limitations</h4>
-                    <p>Existing tools like Figma, InVision, and Maze focus on workflow optimization and comment collection but provide no intelligence about feedback quality or actionability.</p>
+            <!-- Competitive Benchmarking -->
+            <div class="define-subsection fade-in">
+                <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">Competitive Benchmarking</h3>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 48px; line-height: 1.6;">
+                    Analysis of existing design feedback and validation tools to identify market gaps and opportunities for AI-assisted validation.
+                </p>
+
+                <!-- Feature Capability Matrix -->
+                <div class="capability-matrix fade-in">
+                    <div class="matrix-header">
+                        <div class="matrix-icon">📊</div>
+                        <div class="matrix-title">
+                            <h3>Feature Capability Matrix</h3>
+                            <p>Advanced comparison of platform capabilities across critical design validation features</p>
+                        </div>
+                    </div>
+
+                    <div class="matrix-table">
+                        <div class="matrix-row matrix-header-row">
+                            <div class="matrix-cell matrix-feature-header">Platform</div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge ux-badge">UX</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">UXlyzer</div>
+                                    <div class="platform-type">AI-POWERED</div>
+                                </div>
+                            </div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge mobbin-badge">M</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">Mobbin</div>
+                                    <div class="platform-type">DISCOVERY</div>
+                                </div>
+                            </div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge figma-badge">F</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">Figma</div>
+                                    <div class="platform-type">DESIGN TOOL</div>
+                                </div>
+                            </div>
+                            <div class="matrix-cell matrix-platform-header">
+                                <div class="platform-badge dribbble-badge">D</div>
+                                <div class="platform-info">
+                                    <div class="platform-name">Dribbble</div>
+                                    <div class="platform-type">PORTFOLIO</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">Rating & Feedback</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">Explore</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">AI Analysis</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                        </div>
+
+                        <div class="matrix-row">
+                            <div class="matrix-cell matrix-feature-cell">Score List</div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator supported"></div>
+                            </div>
+                            <div class="matrix-cell matrix-capability-cell">
+                                <div class="capability-indicator not-supported"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="research-card fade-in">
-                    <div class="research-type">Market Gap</div>
-                    <h4>Validation Intelligence</h4>
-                    <p>No current solutions analyze feedback quality, provide design validation scoring, or offer objective design assessment capabilities.</p>
+
+                <div class="research-grid" style="margin-top: 60px;">
+                    <div class="research-card">
+                        <div class="research-type">Analysis</div>
+                        <h4>Current Tool Limitations</h4>
+                        <p>Existing tools like Figma, InVision, and Maze focus on workflow optimization and comment collection but provide no intelligence about feedback quality or actionability.</p>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-type">Market Gap</div>
+                        <h4>Validation Intelligence</h4>
+                        <p>No current solutions analyze feedback quality, provide design validation scoring, or offer objective design assessment capabilities.</p>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-type">Opportunity</div>
+                        <h4>AI Integration Potential</h4>
+                        <p>Opportunity exists for intelligent layer between designers and feedback providers, focusing on quality enhancement rather than workflow speed.</p>
+                    </div>
                 </div>
+            </div>
+
+            <!-- User Experience Mapping -->
+            <div class="define-subsection fade-in" style="margin-top: 120px;">
+                <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--text-primary);">User Experience Mapping</h3>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 48px; line-height: 1.6;">
+                    Detailed analysis of user flows, scenarios, and journey mapping to understand the complete design validation experience.
+                </p>
+
+                <!-- User Scenarios Component -->
+                <div class="scenarios-card fade-in">
+                    <div class="scenarios-header">User Scenarios</div>
+                    <h3 class="scenarios-title">Key User Stories</h3>
+
+                    <!-- Expert Scenario -->
+                    <div class="scenario-item">
+                        <div class="scenario-persona">
+                            <div class="persona-avatar expert-avatar">🎯</div>
+                            <div class="persona-info">
+                                <div class="persona-role">Expert Designer</div>
+                                <span class="persona-badge expert-badge">Advanced</span>
+                            </div>
+                        </div>
+                        <div class="scenario-statement">
+                            <div class="statement-row">
+                                <span class="statement-text">As an</span>
+                                <span class="statement-highlight">expert</span>
+                                <span class="statement-text">, I want to</span>
+                                <span class="statement-highlight">explore</span>
+                                <span class="statement-text">, so that</span>
+                                <span class="statement-goal">I can stay inspired</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Beginner Scenario -->
+                    <div class="scenario-item">
+                        <div class="scenario-persona">
+                            <div class="persona-avatar beginner-avatar">🌱</div>
+                            <div class="persona-info">
+                                <div class="persona-role">Beginner Designer</div>
+                                <span class="persona-badge beginner-badge">Learning</span>
+                            </div>
+                        </div>
+                        <div class="scenario-statement">
+                            <div class="statement-row">
+                                <span class="statement-text">As a</span>
+                                <span class="statement-highlight">beginner</span>
+                                <span class="statement-text">, I want to</span>
+                                <span class="statement-highlight">analyze</span>
+                                <span class="statement-text">, so that</span>
+                                <span class="statement-goal">I can improve my design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Freelancer Scenario -->
+                    <div class="scenario-item">
+                        <div class="scenario-persona">
+                            <div class="persona-avatar freelancer-avatar">💼</div>
+                            <div class="persona-info">
+                                <div class="persona-role">Freelance Designer</div>
+                                <span class="persona-badge freelancer-badge">Independent</span>
+                            </div>
+                        </div>
+                        <div class="scenario-statement">
+                            <div class="statement-row">
+                                <span class="statement-text">As a</span>
+                                <span class="statement-highlight">freelancer</span>
+                                <span class="statement-text">, I want to</span>
+                                <span class="statement-highlight">compete</span>
+                                <span class="statement-text">, so that</span>
+                                <span class="statement-goal">I can gain visibility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Flow Analysis Component -->
+                <div class="flow-card fade-in" style="margin-top: 60px;">
+                    <div class="flow-header">User Flow Analysis</div>
+                    <h3 class="flow-title">Primary User Flows</h3>
+
+                    <!-- Analyze Flow -->
+                    <div class="flow-section">
+                        <div class="flow-section-title">
+                            <div class="flow-section-icon">🔍</div>
+                            <span>Analyze Flow</span>
+                        </div>
+                        <div class="flow-path">
+                            <div class="flow-step">
+                                <div class="step-icon">1</div>
+                                <span>Home Page</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">2</div>
+                                <span>AI Analyzer</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">3</div>
+                                <span>Choose Category</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">4</div>
+                                <span>Write App Name</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">5</div>
+                                <span>Click Analyze</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">✓</div>
+                                <span>Analyzed Page</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-divider"></div>
+
+                    <!-- Explore Flow -->
+                    <div class="flow-section">
+                        <div class="flow-section-title">
+                            <div class="flow-section-icon">🧭</div>
+                            <span>Explore Flow</span>
+                        </div>
+                        <div class="flow-path">
+                            <div class="flow-step">
+                                <div class="step-icon">1</div>
+                                <span>Home Page</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">2</div>
+                                <span>Explore Page</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">✓</div>
+                                <span>Choose Category</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Journey Map Component -->
+                <div class="journey-card fade-in" style="margin-top: 60px;">
+                    <div class="journey-header">User Journey Map</div>
+                    <h3 class="journey-title">Analyze Features Journey</h3>
+
+                    <div class="journey-grid">
+                        <!-- Task Flow Card -->
+                        <div class="stage-card">
+                            <div class="card-header">
+                                <div class="card-number blue">01</div>
+                                <h3 class="card-title">Task Flow</h3>
+                            </div>
+                            <div class="task-list">
+                                <div class="task-item">
+                                    <div class="task-dot green"></div>
+                                    <span class="task-text">Home Page</span>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-dot blue"></div>
+                                    <span class="task-text">AI Analyzer</span>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-dot purple"></div>
+                                    <span class="task-text">Choose Category</span>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-dot yellow"></div>
+                                    <span class="task-text">Write App Name</span>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-dot red"></div>
+                                    <span class="task-text">Click Analyze</span>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-dot purple"></div>
+                                    <span class="task-text">Analyzed Page</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Feeling Card -->
+                        <div class="stage-card">
+                            <div class="card-header">
+                                <div class="card-number green">02</div>
+                                <h3 class="card-title">User Feeling</h3>
+                            </div>
+                            <div class="feeling-content">
+                                <div class="feeling-icon">✨</div>
+                                <h4 class="feeling-title">Excited & Accomplished</h4>
+                                <div class="feeling-badge">Positive Experience</div>
+
+                                <div class="metrics">
+                                    <div class="metric-row">
+                                        <span class="metric-label">Satisfaction</span>
+                                        <div class="metric-dots">
+                                            <div class="dot yellow-filled"></div>
+                                            <div class="dot yellow-filled"></div>
+                                            <div class="dot yellow-filled"></div>
+                                            <div class="dot yellow-filled"></div>
+                                            <div class="dot yellow-filled"></div>
+                                        </div>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">Ease of Use</span>
+                                        <div class="metric-dots">
+                                            <div class="dot blue-filled"></div>
+                                            <div class="dot blue-filled"></div>
+                                            <div class="dot blue-filled"></div>
+                                            <div class="dot blue-filled"></div>
+                                            <div class="dot blue-empty"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Improvement Opportunity Card -->
+                        <div class="stage-card">
+                            <div class="card-header">
+                                <div class="card-number purple">03</div>
+                                <h3 class="card-title">Improvement Opportunity</h3>
+                            </div>
+                            <div class="opportunity-content">
+                                <div class="opportunity-icon">💡</div>
+                                <h4 class="opportunity-label">Suggested Feature</h4>
+                                <div class="feature-badge">"Better than 60%" benchmark</div>
+
+                                <div class="performance-metrics">
+                                    <div class="performance-item">
+                                        <div class="performance-header">
+                                            <span class="performance-label">Current Performance</span>
+                                            <span class="performance-value yellow">60%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill yellow"></div>
+                                        </div>
+                                    </div>
+                                    <div class="performance-item">
+                                        <div class="performance-header">
+                                            <span class="performance-label">Target Performance</span>
+                                            <span class="performance-value green">85%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill green"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Insights from Analysis -->
+            <div class="research-grid" style="margin-top: 80px;">
                 <div class="research-card fade-in">
-                    <div class="research-type">Opportunity</div>
-                    <h4>AI Integration Potential</h4>
-                    <p>Opportunity exists for intelligent layer between designers and feedback providers, focusing on quality enhancement rather than workflow speed.</p>
+                    <div class="research-type">User Flow Insight</div>
+                    <h4>Feedback Loop Complexity</h4>
+                    <p>Current feedback flows involve multiple stakeholders, unclear handoffs, and lack of structured validation criteria, creating confusion and delays.</p>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-type">Journey Pain Point</div>
+                    <h4>Confidence Degradation</h4>
+                    <p>Designer confidence decreases throughout the feedback journey due to subjective, contradictory, or vague responses that don't provide clear direction.</p>
+                </div>
+
+                <div class="research-card fade-in">
+                    <div class="research-type">Scenario Analysis</div>
+                    <h4>Context-Dependent Needs</h4>
+                    <p>Different user scenarios (freelancer isolation, team collaboration, client feedback) require different types of validation support and confidence-building mechanisms.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer>
+        <div id="footer-container"></div>
+        <div class="sticky-next-steps">
+            <!-- Sticky footer content removed for brevity -->
+        </div>
+    </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.nav-hamburger');
-            const navItems = document.querySelector('.nav-items');
-            const hamburgerIcon = hamburger?.querySelector('.hamburger-icon');
-
-            if (hamburger && navItems && hamburgerIcon) {
-                hamburger.setAttribute('aria-expanded', 'false');
-                hamburger.setAttribute('aria-controls', 'navigation-menu');
-                navItems.setAttribute('id', 'navigation-menu');
-
-                hamburger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    navItems.classList.toggle('mobile-open');
-
-                    if (navItems.classList.contains('mobile-open')) {
-                        hamburgerIcon.textContent = '✕';
-                        hamburger.setAttribute('aria-expanded', 'true');
-                        hamburger.setAttribute('aria-label', 'Close navigation menu');
-                    } else {
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                        hamburger.setAttribute('aria-label', 'Open navigation menu');
-                    }
-                });
-
-                document.addEventListener('click', function(e) {
-                    if (navItems.classList.contains('mobile-open') && 
-                        !navItems.contains(e.target) && 
-                        !hamburger.contains(e.target)) {
-                        
-                        navItems.classList.remove('mobile-open');
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-
-                navItems.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', function() {
-                        navItems.classList.remove('mobile-open');
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    });
-                });
-
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && navItems.classList.contains('mobile-open')) {
-                        navItems.classList.remove('mobile-open');
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const animationObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('visible');
-                        }, index * 100);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in').forEach(el => {
-                animationObserver.observe(el);
+        // Load footer component
+        fetch('footer-component.html')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('footer-container').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Could not load the footer:', error);
+                document.getElementById('footer-container').innerHTML = `
+            <footer style="background: #0a0a0a; color: white; padding: 40px 0; text-align: center;">
+                <p>Footer could not be loaded.</p>
+            </footer>
+        `;
             });
 
-            const nav = document.querySelector('.nav-container');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 100) {
-                    nav.style.background = 'rgba(10, 10, 10, 0.9)';
-                    nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                } else {
-                    nav.style.background = 'rgba(16, 16, 16, 0.8)';
-                    nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        // Hamburger menu functionality - COMPLETE FIXED VERSION
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.nav-hamburger');
+    const navItems = document.querySelector('.nav-items');
+    const hamburgerIcon = hamburger?.querySelector('.hamburger-icon');
+
+    console.log('DEBUG: Hamburger menu elements:', {
+        hamburger: hamburger ? 'FOUND' : 'NOT FOUND',
+        navItems: navItems ? 'FOUND' : 'NOT FOUND', 
+        hamburgerIcon: hamburgerIcon ? 'FOUND' : 'NOT FOUND'
+    });
+
+    if (hamburger && navItems && hamburgerIcon) {
+        // Add initial aria attributes
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-controls', 'navigation-menu');
+        navItems.setAttribute('id', 'navigation-menu');
+
+        hamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('DEBUG: Hamburger clicked - current state:', navItems.classList.contains('mobile-open'));
+            
+            // Toggle menu
+            navItems.classList.toggle('mobile-open');
+            
+            console.log('DEBUG: After toggle - mobile-open:', navItems.classList.contains('mobile-open'));
+            console.log('DEBUG: Computed display:', window.getComputedStyle(navItems).display);
+
+            // Update icon and aria attributes
+            if (navItems.classList.contains('mobile-open')) {
+                hamburgerIcon.textContent = '✕';
+                hamburger.setAttribute('aria-expanded', 'true');
+                hamburger.setAttribute('aria-label', 'Close navigation menu');
+                console.log('DEBUG: Menu OPENED - icon changed to X');
+            } else {
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Menu CLOSED - icon changed to ☰');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navItems.classList.contains('mobile-open') && 
+                !navItems.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                
+                navItems.classList.remove('mobile-open');
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Closed menu by clicking outside');
+            }
+        });
+
+        // Close menu when clicking a link
+        navItems.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                navItems.classList.remove('mobile-open');
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Closed menu by clicking link');
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navItems.classList.contains('mobile-open')) {
+                navItems.classList.remove('mobile-open');
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Closed menu with Escape key');
+            }
+        });
+
+        // Prevent body scroll when menu is open
+        const originalOverflow = document.body.style.overflow;
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    if (navItems.classList.contains('mobile-open')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = originalOverflow;
+                    }
                 }
             });
         });
+        
+        observer.observe(navItems, { attributes: true });
+
+    } else {
+        console.error('DEBUG: Missing required hamburger menu elements - check your HTML structure');
+        
+        // Fallback: Show what elements are missing
+        if (!hamburger) console.error('DEBUG: .nav-hamburger element not found');
+        if (!navItems) console.error('DEBUG: .nav-items element not found');
+        if (!hamburgerIcon) console.error('DEBUG: .hamburger-icon element not found');
+    }
+
+    // KEEP ALL YOUR EXISTING CODE BELOW - DON'T CHANGE ANYTHING AFTER THIS LINE
+    // -------------------------------------------------------------------------
+    // Existing scroll progress functionality
+    const stickyFooter = document.querySelector('.sticky-next-steps');
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    let footerVisible = false;
+    let scrollTimeout;
+
+    function updateScrollProgress() {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+        progressBar.style.width = scrollPercent + '%';
+
+        const nearBottom = scrollPercent > 85;
+
+        if (nearBottom && !footerVisible) {
+            stickyFooter.classList.add('visible');
+            footerVisible = true;
+        } else if (!nearBottom && footerVisible) {
+            stickyFooter.classList.remove('visible');
+            footerVisible = false;
+        }
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!scrollTimeout) {
+            scrollTimeout = setTimeout(function() {
+                updateScrollProgress();
+                scrollTimeout = null;
+            }, 50);
+        }
+    });
+
+    updateScrollProgress();
+    window.addEventListener('resize', updateScrollProgress);
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+        animationObserver.observe(el);
+    });
+
+    // Enhanced card hover effects
+    document.querySelectorAll('.research-card, .define-image-card, .capability-indicator, .scenario-item, .flow-step, .stage-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            if (this.classList.contains('capability-indicator')) {
+                this.style.transform = 'scale(1.2)';
+            } else {
+                this.style.transform = 'translateY(-8px)';
+            }
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            if (this.classList.contains('capability-indicator')) {
+                this.style.transform = 'scale(1)';
+            }
+        });
+    });
+
+    // Navigation glassmorphism enhancement on scroll
+    const nav = document.querySelector('.nav-container');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            nav.style.background = 'rgba(10, 10, 10, 0.9)';
+            nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+        } else {
+            nav.style.background = 'rgba(16, 16, 16, 0.8)';
+            nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        }
+    });
+
+    // Enhanced accessibility
+    document.querySelectorAll('a, button, [tabindex]').forEach(element => {
+        element.addEventListener('focus', function() {
+            this.style.outline = '2px solid var(--accent)';
+            this.style.outlineOffset = '2px';
+            this.style.borderRadius = '4px';
+        });
+
+        element.addEventListener('blur', function() {
+            this.style.outline = 'none';
+        });
+    });
+
+    console.log('UXlyzer Define - Anas Albaloshi - Hamburger menu initialized');
+});
     </script>
 </body>
+
 </html>
