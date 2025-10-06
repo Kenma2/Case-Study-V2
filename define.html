@@ -1405,6 +1405,41 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .matrix-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .matrix-row {
+                display: grid;
+                grid-template-columns: 160px repeat(4, 100px);
+                min-width: 560px;
+            }
+            .matrix-cell {
+                padding: 16px 12px;
+                min-height: 60px;
+            }
+            .platform-badge {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            .matrix-feature-cell {
+                font-size: 12px;
+            }
+            .platform-name {
+                font-size: 12px;
+            }
+            .platform-type {
+                font-size: 9px;
+            }
+            .capability-indicator {
+                width: 16px;
+                height: 16px;
+            }
+            .capability-indicator::after {
+                font-size: 10px;
+            }
             .section-container {
                 padding: 0 20px;
             }
