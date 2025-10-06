@@ -271,7 +271,9 @@
         }
         
         .nav-items {
-            display: flex;
+            display: flex !important;
+            flex-direction: column;
+            background: red; /* debug */
             list-style: none;
             gap: 24px;
             margin: 0;
@@ -2544,3 +2546,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 
 </html>
+
