@@ -224,7 +224,18 @@
                 justify-content: center;
             }
         }
-        
+        /* TEMPORARY: Force mobile menu to show for testing */
+@media (max-width: 768px) {
+    .nav-items {
+        display: flex !important;
+        position: fixed !important;
+        top: 80px !important;
+        left: 20px !important;
+        right: 20px !important;
+        background: red !important;
+        z-index: 9999 !important;
+    }
+}
         @media (max-width: 480px) {
             .sticky-steps-links {
                 display: grid;
@@ -1716,9 +1727,10 @@
         }
         /* Mobile Navigation Styles */
         
-        @media (max-width: 768px) {
-            .nav-wrapper {
-                position: fixed;
+        /* Mobile Navigation Styles - COMPLETE FIX */
+@media (max-width: 768px) {
+    .nav-wrapper {
+        position: fixed;
         top: 20px;
         left: 20px;
         right: 20px;
@@ -1726,78 +1738,90 @@
         width: auto;
         max-width: none;
         z-index: 1000;
-            }
-            .nav-container {
-                justify-content: space-between;
-                padding: 10px 20px;
-                gap: 0;
-                position: relative;
-            }
-            /* Show hamburger on mobile */
-            .nav-hamburger {
-                display: flex;
-            }
-            /* Hide regular nav items on mobile */
-            .nav-items {
-                display: none;
-                position: fixed; /* Changed from absolute to fixed */
-                top: 80px; /* Position below the navigation bar */
-                left: 20px;
-                right: 20px;
-                background: rgba(16, 16, 16, 0.98);
-                backdrop-filter: blur(40px);
-                -webkit-backdrop-filter: blur(40px);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                border-radius: 20px;
-                padding: 24px;
-                margin-top: 0;
-                flex-direction: column;
-                gap: 12px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-                z-index: 1001;
-                max-height: calc(100vh - 120px); /* Limit height */
-                overflow-y: auto; /* Scroll if needed */
-            }
-            /* Show nav items when menu is open */
-            .nav-items.mobile-open {
-                display: flex !important;
-            }
-            .nav-item {
-                width: 100%;
-            }
-            .nav-link {
-                display: block;
+    }
+    
+    .nav-container {
+        justify-content: space-between;
+        padding: 12px 20px;
+        gap: 0;
+        position: relative;
+    }
+    
+    /* Show hamburger on mobile */
+    .nav-hamburger {
+        display: flex;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Hide regular nav items on mobile */
+    .nav-items {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 20px;
+        right: 20px;
+        background: rgba(16, 16, 16, 0.98);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        padding: 24px;
+        margin: 0;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        z-index: 1001;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+    
+    /* Show nav items when menu is open - THIS IS CRITICAL */
+    .nav-items.mobile-open {
+        display: flex !important;
+    }
+    
+    .nav-item {
+        width: 100%;
+    }
+    
+    .nav-link {
+        display: block;
         padding: 16px 20px;
         border-radius: 12px;
         text-align: center;
         font-size: 16px;
+        font-weight: 500;
         width: 100%;
         transition: all 0.3s ease;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            .nav-link:hover,
+        color: var(--text-secondary);
+    }
+    
+    .nav-link:hover,
     .nav-link.active {
         background: rgba(59, 130, 246, 0.2);
         color: var(--accent);
         border-color: rgba(59, 130, 246, 0.3);
         box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
         transform: translateY(-2px);
-            }
-            .section-container {
-                padding: 0 20px;
-            }
-            .research-grid {
-                grid-template-columns: 1fr;
-            }
-            .define-images {
-                grid-template-columns: 1fr;
-            }
-            .footer-links {
-                flex-direction: column;
-                gap: 16px;
-            }
-        }
+    }
+    
+    .section-container {
+        padding: 0 20px;
+    }
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
+    .define-images {
+        grid-template-columns: 1fr;
+    }
+    .footer-links {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
         /* Animations */
         
         .fade-in {
@@ -2315,165 +2339,218 @@
         `;
             });
 
-        // Hamburger menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.nav-hamburger');
-            const navItems = document.querySelector('.nav-items');
-            const hamburgerIcon = hamburger?.querySelector('.hamburger-icon'); // FIXED LINE
+        // Hamburger menu functionality - COMPLETE FIXED VERSION
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.nav-hamburger');
+    const navItems = document.querySelector('.nav-items');
+    const hamburgerIcon = hamburger?.querySelector('.hamburger-icon');
 
-            if (hamburger && navItems && hamburgerIcon) {
-                hamburger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    navItems.classList.toggle('mobile-open');
+    console.log('DEBUG: Hamburger menu elements:', {
+        hamburger: hamburger ? 'FOUND' : 'NOT FOUND',
+        navItems: navItems ? 'FOUND' : 'NOT FOUND', 
+        hamburgerIcon: hamburgerIcon ? 'FOUND' : 'NOT FOUND'
+    });
 
-                    // Change hamburger icon to X when open
-                    if (navItems.classList.contains('mobile-open')) {
-                        hamburgerIcon.textContent = '✕';
-                        hamburger.setAttribute('aria-expanded', 'true');
-                    } else {
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
+    if (hamburger && navItems && hamburgerIcon) {
+        // Add initial aria attributes
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-controls', 'navigation-menu');
+        navItems.setAttribute('id', 'navigation-menu');
 
-                // Close menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!navItems.contains(e.target) && !hamburger.contains(e.target)) {
-                        navItems.classList.remove('mobile-open');
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
+        hamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('DEBUG: Hamburger clicked - current state:', navItems.classList.contains('mobile-open'));
+            
+            // Toggle menu
+            navItems.classList.toggle('mobile-open');
+            
+            console.log('DEBUG: After toggle - mobile-open:', navItems.classList.contains('mobile-open'));
+            console.log('DEBUG: Computed display:', window.getComputedStyle(navItems).display);
 
-                // Close menu when clicking a link
-                navItems.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', function() {
-                        navItems.classList.remove('mobile-open');
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    });
-                });
-
-                // Close menu on escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && navItems.classList.contains('mobile-open')) {
-                        navItems.classList.remove('mobile-open');
-                        hamburgerIcon.textContent = '☰';
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-
-            // Update aria-expanded attribute initially
-            if (hamburger) {
+            // Update icon and aria attributes
+            if (navItems.classList.contains('mobile-open')) {
+                hamburgerIcon.textContent = '✕';
+                hamburger.setAttribute('aria-expanded', 'true');
+                hamburger.setAttribute('aria-label', 'Close navigation menu');
+                console.log('DEBUG: Menu OPENED - icon changed to X');
+            } else {
+                hamburgerIcon.textContent = '☰';
                 hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Menu CLOSED - icon changed to ☰');
             }
-
-            // Existing scroll progress functionality
-            const stickyFooter = document.querySelector('.sticky-next-steps');
-            const progressBar = document.createElement('div');
-            progressBar.className = 'scroll-progress';
-            document.body.appendChild(progressBar);
-
-            let footerVisible = false;
-            let scrollTimeout;
-
-            function updateScrollProgress() {
-                const windowHeight = window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight;
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
-
-                progressBar.style.width = scrollPercent + '%';
-
-                const nearBottom = scrollPercent > 85;
-
-                if (nearBottom && !footerVisible) {
-                    stickyFooter.classList.add('visible');
-                    footerVisible = true;
-                } else if (!nearBottom && footerVisible) {
-                    stickyFooter.classList.remove('visible');
-                    footerVisible = false;
-                }
-            }
-
-            window.addEventListener('scroll', function() {
-                if (!scrollTimeout) {
-                    scrollTimeout = setTimeout(function() {
-                        updateScrollProgress();
-                        scrollTimeout = null;
-                    }, 50);
-                }
-            });
-
-            updateScrollProgress();
-            window.addEventListener('resize', updateScrollProgress);
-
-            // Intersection Observer for animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('visible');
-                        }, index * 100);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-
-            // Enhanced card hover effects
-            document.querySelectorAll('.research-card, .define-image-card, .capability-indicator, .scenario-item, .flow-step, .stage-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    if (this.classList.contains('capability-indicator')) {
-                        this.style.transform = 'scale(1.2)';
-                    } else {
-                        this.style.transform = 'translateY(-8px)';
-                    }
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    if (this.classList.contains('capability-indicator')) {
-                        this.style.transform = 'scale(1)';
-                    }
-                });
-            });
-
-            // Navigation glassmorphism enhancement on scroll
-            const nav = document.querySelector('.nav-container');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 100) {
-                    nav.style.background = 'rgba(10, 10, 10, 0.9)';
-                    nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                } else {
-                    nav.style.background = 'rgba(16, 16, 16, 0.8)';
-                    nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                }
-            });
-
-            // Enhanced accessibility
-            document.querySelectorAll('a, button, [tabindex]').forEach(element => {
-                element.addEventListener('focus', function() {
-                    this.style.outline = '2px solid var(--accent)';
-                    this.style.outlineOffset = '2px';
-                    this.style.borderRadius = '4px';
-                });
-
-                element.addEventListener('blur', function() {
-                    this.style.outline = 'none';
-                });
-            });
-
-            console.log('UXlyzer Define - Anas Albaloshi');
         });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navItems.classList.contains('mobile-open') && 
+                !navItems.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                
+                navItems.classList.remove('mobile-open');
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Closed menu by clicking outside');
+            }
+        });
+
+        // Close menu when clicking a link
+        navItems.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                navItems.classList.remove('mobile-open');
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Closed menu by clicking link');
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navItems.classList.contains('mobile-open')) {
+                navItems.classList.remove('mobile-open');
+                hamburgerIcon.textContent = '☰';
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                console.log('DEBUG: Closed menu with Escape key');
+            }
+        });
+
+        // Prevent body scroll when menu is open
+        const originalOverflow = document.body.style.overflow;
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    if (navItems.classList.contains('mobile-open')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = originalOverflow;
+                    }
+                }
+            });
+        });
+        
+        observer.observe(navItems, { attributes: true });
+
+    } else {
+        console.error('DEBUG: Missing required hamburger menu elements - check your HTML structure');
+        
+        // Fallback: Show what elements are missing
+        if (!hamburger) console.error('DEBUG: .nav-hamburger element not found');
+        if (!navItems) console.error('DEBUG: .nav-items element not found');
+        if (!hamburgerIcon) console.error('DEBUG: .hamburger-icon element not found');
+    }
+
+    // KEEP ALL YOUR EXISTING CODE BELOW - DON'T CHANGE ANYTHING AFTER THIS LINE
+    // -------------------------------------------------------------------------
+    // Existing scroll progress functionality
+    const stickyFooter = document.querySelector('.sticky-next-steps');
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    let footerVisible = false;
+    let scrollTimeout;
+
+    function updateScrollProgress() {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+
+        progressBar.style.width = scrollPercent + '%';
+
+        const nearBottom = scrollPercent > 85;
+
+        if (nearBottom && !footerVisible) {
+            stickyFooter.classList.add('visible');
+            footerVisible = true;
+        } else if (!nearBottom && footerVisible) {
+            stickyFooter.classList.remove('visible');
+            footerVisible = false;
+        }
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!scrollTimeout) {
+            scrollTimeout = setTimeout(function() {
+                updateScrollProgress();
+                scrollTimeout = null;
+            }, 50);
+        }
+    });
+
+    updateScrollProgress();
+    window.addEventListener('resize', updateScrollProgress);
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+        animationObserver.observe(el);
+    });
+
+    // Enhanced card hover effects
+    document.querySelectorAll('.research-card, .define-image-card, .capability-indicator, .scenario-item, .flow-step, .stage-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            if (this.classList.contains('capability-indicator')) {
+                this.style.transform = 'scale(1.2)';
+            } else {
+                this.style.transform = 'translateY(-8px)';
+            }
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            if (this.classList.contains('capability-indicator')) {
+                this.style.transform = 'scale(1)';
+            }
+        });
+    });
+
+    // Navigation glassmorphism enhancement on scroll
+    const nav = document.querySelector('.nav-container');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            nav.style.background = 'rgba(10, 10, 10, 0.9)';
+            nav.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+        } else {
+            nav.style.background = 'rgba(16, 16, 16, 0.8)';
+            nav.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        }
+    });
+
+    // Enhanced accessibility
+    document.querySelectorAll('a, button, [tabindex]').forEach(element => {
+        element.addEventListener('focus', function() {
+            this.style.outline = '2px solid var(--accent)';
+            this.style.outlineOffset = '2px';
+            this.style.borderRadius = '4px';
+        });
+
+        element.addEventListener('blur', function() {
+            this.style.outline = 'none';
+        });
+    });
+
+    console.log('UXlyzer Define - Anas Albaloshi - Hamburger menu initialized');
+});
     </script>
 </body>
 
