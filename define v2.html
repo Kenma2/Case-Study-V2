@@ -334,6 +334,28 @@
             background: rgba(59, 130, 246, 0.15);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
+        /* Hide hamburger on desktop */
+        
+        .nav-hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+        }
+        
+        .nav-hamburger:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
         /* Section Styles */
         
         .section {
@@ -411,7 +433,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 40px;
+            padding: 32px;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -828,8 +850,8 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 40px;
-            max-width: 800px;
+            padding: 32px;
+            width: 100%;
             margin: 0 auto;
             transition: all 0.4s ease;
             position: relative;
@@ -874,7 +896,7 @@
         .scenarios-title {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             color: var(--text-primary);
             font-family: 'Space Grotesk', sans-serif;
         }
@@ -1029,8 +1051,8 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 40px;
-            max-width: 800px;
+            padding: 32px;
+            width: 100%;
             margin: 0 auto;
             transition: all 0.4s ease;
             position: relative;
@@ -1075,7 +1097,7 @@
         .flow-title {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             color: var(--text-primary);
             font-family: 'Space Grotesk', sans-serif;
         }
@@ -1181,8 +1203,8 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 40px;
-            max-width: 1100px;
+            padding: 32px;
+            width: 100%;
             margin: 0 auto;
             transition: all 0.4s ease;
             position: relative;
@@ -1227,7 +1249,7 @@
         .journey-title {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
             color: var(--text-primary);
             font-family: 'Space Grotesk', sans-serif;
         }
@@ -1240,11 +1262,11 @@
         
         .stage-card {
             background: var(--background-secondary);
-            border: 1px solid var(--border-light);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 32px;
             transition: all 0.4s ease;
-            /* Changed from 0.3s to match research cards */
             position: relative;
             overflow: hidden;
         }
@@ -1258,23 +1280,17 @@
             height: 3px;
             background: linear-gradient(90deg, var(--accent), #1e40af);
             transform: scaleX(0);
-            /* Changed from opacity to transform to match research cards */
             transition: transform 0.3s ease;
-            /* Added transform transition */
         }
         
         .stage-card:hover {
-            background: var(--background-tertiary);
-            border-color: var(--accent);
             transform: translateY(-8px);
-            /* Increased from -4px to match research cards */
+            border-color: var(--accent);
             box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-            /* Enhanced shadow to match research cards */
         }
         
         .stage-card:hover::before {
             transform: scaleX(1);
-            /* Changed from opacity to transform */
         }
         
         .card-header {
@@ -1503,7 +1519,6 @@
             background: rgba(139, 92, 246, 0.15);
             border-color: #8b5cf6;
             transform: translateY(-2px);
-            /* Add slight lift on hover */
         }
         
         .performance-metrics {
@@ -1525,7 +1540,6 @@
         .performance-item:hover {
             border-color: var(--accent);
             transform: translateY(-2px);
-            /* Add slight lift */
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
         }
         
@@ -1700,7 +1714,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        /* Responsive Design */
+        /* Mobile Navigation Styles */
         
         @media (max-width: 768px) {
             .nav-wrapper {
@@ -1711,76 +1725,56 @@
                 transform: none;
                 width: auto;
                 max-width: none;
-                overflow-x: auto;
-                /* Enable horizontal scrolling */
-                overflow-y: hidden;
-                /* Hide vertical scrollbar */
-                -webkit-overflow-scrolling: touch;
-                /* Smooth scrolling on iOS */
-                scrollbar-width: none;
-                /* Hide scrollbar Firefox */
-                -ms-overflow-style: none;
-                /* Hide scrollbar IE/Edge */
-            }
-            .nav-wrapper::-webkit-scrollbar {
-                display: none;
-                /* Hide scrollbar Chrome/Safari */
             }
             .nav-container {
-                width: max-content;
-                /* Allow container to expand beyond viewport */
-                min-width: 100%;
-                /* But at least take full width */
+                justify-content: space-between;
                 padding: 10px 20px;
-                gap: 16px;
-                flex-wrap: nowrap;
-                /* Prevent items from wrapping */
-                justify-content: flex-start;
-                /* Align items to start */
+                gap: 0;
             }
+            /* Show hamburger on mobile */
+            .nav-hamburger {
+                display: flex;
+            }
+            /* Hide regular nav items on mobile */
             .nav-items {
-                flex-wrap: nowrap;
-                /* Prevent nav items from wrapping */
-                gap: 16px;
-                width: max-content;
-                /* Allow items to extend beyond container */
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(16, 16, 16, 0.95);
+                backdrop-filter: blur(40px);
+                -webkit-backdrop-filter: blur(40px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 20px;
+                padding: 20px;
+                margin-top: 10px;
+                flex-direction: column;
+                gap: 8px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+                z-index: 1001;
+            }
+            /* Show nav items when menu is open */
+            .nav-items.mobile-open {
+                display: flex;
             }
             .nav-item {
-                flex-shrink: 0;
-                /* Prevent items from shrinking */
+                width: 100%;
             }
             .nav-link {
-                font-size: 12px;
-                padding: 6px 12px;
-                white-space: nowrap;
-                /* Prevent text wrapping */
+                display: block;
+                padding: 12px 16px;
+                border-radius: 12px;
+                text-align: center;
+                font-size: 14px;
+                width: 100%;
+                transition: all 0.3s ease;
             }
-            .nav-wrapper {
-                position: relative;
-            }
-            .nav-wrapper::before,
-            .nav-wrapper::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                width: 20px;
-                z-index: 2;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            .nav-wrapper::before {
-                left: 0;
-                background: linear-gradient(90deg, rgba(16, 16, 16, 0.9) 0%, transparent 100%);
-            }
-            .nav-wrapper::after {
-                right: 0;
-                background: linear-gradient(270deg, rgba(16, 16, 16, 0.9) 0%, transparent 100%);
-            }
-            .nav-wrapper.scroll-left::before,
-            .nav-wrapper.scroll-right::after {
-                opacity: 1;
+            .nav-link:hover,
+            .nav-link.active {
+                background: rgba(59, 130, 246, 0.15);
+                color: var(--accent);
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
             }
             .section-container {
                 padding: 0 20px;
@@ -1832,6 +1826,13 @@
     <div class="nav-wrapper">
         <nav class="nav-container">
             <a href="index.html" class="nav-brand">UXlyzer</a>
+
+            <!-- Hamburger Button - Hidden on desktop, visible on mobile -->
+            <button class="nav-hamburger" aria-label="Toggle navigation menu">
+                <span class="hamburger-icon">☰</span>
+            </button>
+
+            <!-- Regular Navigation Items - Visible on desktop, hidden on mobile until opened -->
             <ul class="nav-items">
                 <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
@@ -2003,7 +2004,7 @@
                 </p>
 
                 <!-- User Scenarios Component -->
-                <div class="journey-card fade-in">
+                <div class="scenarios-card fade-in">
                     <div class="scenarios-header">User Scenarios</div>
                     <h3 class="scenarios-title">Key User Stories</h3>
 
@@ -2072,7 +2073,7 @@
                 </div>
 
                 <!-- User Flow Analysis Component -->
-                <div class="journey-card fade-in" style="margin-top: 60px;">
+                <div class="flow-card fade-in" style="margin-top: 60px;">
                     <div class="flow-header">User Flow Analysis</div>
                     <h3 class="flow-title">Primary User Flows</h3>
 
@@ -2282,71 +2283,85 @@
     <footer>
         <div id="footer-container"></div>
         <div class="sticky-next-steps">
-
-
-            <!--
-                    <div class="sticky-steps-text">
-                        <span class="steps-label">Continue Exploring</span>
-                        <span class="steps-arrow">↓</span>
-                    </div>
-
-                    <div class="sticky-steps-links">
-                        <a href="research.html" class="sticky-link">
-                            <span class="link-icon">🔍</span> Research
-                        </a>
-                        
-                <a href="define.html" class="sticky-link">
-                    <span class="link-icon">📊</span>
-                    Analysis
-                </a>
-            
-                        <a href="design.html" class="sticky-link">
-                            <span class="link-icon">🎨</span> Design
-                        </a>
-                        
-                 <a href="learnings.html" class="sticky-link">
-                    <span class="link-icon">💡</span>
-                    Learnings
-                </a> 
-            
-                    </div>
-
-                    <a href="contact.html" class="sticky-cta">
-                Get in Touch
-                </a>
-                </div> 
-                -->
-        </div>
+            <!-- Sticky footer content removed for brevity -->
         </div>
     </footer>
     <script>
         // Load footer component
         fetch('footer-component.html')
             .then(response => {
-                // Check if the response is successful (status 200-299)
                 if (!response.ok) {
-                    // This will catch 404 (Not Found) and other bad responses
-                    throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.text();
             })
             .then(html => {
-                // Inject the footer HTML into the container
                 document.getElementById('footer-container').innerHTML = html;
             })
             .catch(error => {
-                // Log the detailed error to the console
                 console.error('Could not load the footer:', error);
-                // Provide a user-friendly fallback
                 document.getElementById('footer-container').innerHTML = `
             <footer style="background: #0a0a0a; color: white; padding: 40px 0; text-align: center;">
                 <p>Footer could not be loaded.</p>
             </footer>
         `;
             });
-    </script>
-    <script>
+
+        // Hamburger menu functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.nav-hamburger');
+            const navItems = document.querySelector('.nav-items');
+            const hamburgerIcon = hamburger?.querySelector('.hamburger-icon'); // FIXED LINE
+
+            if (hamburger && navItems && hamburgerIcon) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navItems.classList.toggle('mobile-open');
+
+                    // Change hamburger icon to X when open
+                    if (navItems.classList.contains('mobile-open')) {
+                        hamburgerIcon.textContent = '✕';
+                        hamburger.setAttribute('aria-expanded', 'true');
+                    } else {
+                        hamburgerIcon.textContent = '☰';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navItems.contains(e.target) && !hamburger.contains(e.target)) {
+                        navItems.classList.remove('mobile-open');
+                        hamburgerIcon.textContent = '☰';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close menu when clicking a link
+                navItems.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        navItems.classList.remove('mobile-open');
+                        hamburgerIcon.textContent = '☰';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && navItems.classList.contains('mobile-open')) {
+                        navItems.classList.remove('mobile-open');
+                        hamburgerIcon.textContent = '☰';
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // Update aria-expanded attribute initially
+            if (hamburger) {
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+
+            // Existing scroll progress functionality
             const stickyFooter = document.querySelector('.sticky-next-steps');
             const progressBar = document.createElement('div');
             progressBar.className = 'scroll-progress';
@@ -2361,11 +2376,9 @@
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
 
-                // Update progress bar
                 progressBar.style.width = scrollPercent + '%';
 
-                // Show/hide footer based on scroll position
-                const nearBottom = scrollPercent > 85; // Show when 85% scrolled
+                const nearBottom = scrollPercent > 85;
 
                 if (nearBottom && !footerVisible) {
                     stickyFooter.classList.add('visible');
@@ -2376,7 +2389,6 @@
                 }
             }
 
-            // Throttled scroll event
             window.addEventListener('scroll', function() {
                 if (!scrollTimeout) {
                     scrollTimeout = setTimeout(function() {
@@ -2386,26 +2398,9 @@
                 }
             });
 
-            // Initial check
             updateScrollProgress();
-
-            // Also check on resize
             window.addEventListener('resize', updateScrollProgress);
 
-            // Add click handler for smooth scrolling to top when clicking on links
-            document.querySelectorAll('.sticky-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Remove visible class when navigating
-                    stickyFooter.classList.remove('visible');
-                    footerVisible = false;
-                });
-            });
-
-            console.log('Sticky footer loaded - ready to guide users!');
-        });
-
-
-        document.addEventListener('DOMContentLoaded', function() {
             // Intersection Observer for animations
             const observerOptions = {
                 threshold: 0.1,
@@ -2422,7 +2417,6 @@
                 });
             }, observerOptions);
 
-            // Observe all animated elements
             document.querySelectorAll('.fade-in').forEach(el => {
                 observer.observe(el);
             });
@@ -2471,76 +2465,6 @@
             });
 
             console.log('UXlyzer Define - Anas Albaloshi');
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navWrapper = document.querySelector('.nav-wrapper');
-            const navContainer = document.querySelector('.nav-container');
-
-            if (navWrapper && window.innerWidth <= 768) {
-                // Function to update scroll indicators
-                function updateScrollIndicators() {
-                    const scrollLeft = navWrapper.scrollLeft;
-                    const scrollWidth = navWrapper.scrollWidth;
-                    const clientWidth = navWrapper.clientWidth;
-
-                    // Remove existing classes
-                    navWrapper.classList.remove('scroll-left', 'scroll-right');
-
-                    // Add classes based on scroll position
-                    if (scrollLeft > 10) {
-                        navWrapper.classList.add('scroll-left');
-                    }
-                    if (scrollLeft < (scrollWidth - clientWidth - 10)) {
-                        navWrapper.classList.add('scroll-right');
-                    }
-                }
-
-                // Initial check
-                updateScrollIndicators();
-
-                // Update on scroll
-                navWrapper.addEventListener('scroll', updateScrollIndicators);
-
-                // Update on resize
-                window.addEventListener('resize', updateScrollIndicators);
-
-                // Add touch swipe functionality
-                let startX = 0;
-                let scrollLeft = 0;
-
-                navWrapper.addEventListener('touchstart', function(e) {
-                    startX = e.touches[0].pageX;
-                    scrollLeft = navWrapper.scrollLeft;
-                });
-
-                navWrapper.addEventListener('touchmove', function(e) {
-                    if (!e.touches || e.touches.length === 0) return;
-
-                    const x = e.touches[0].pageX;
-                    const walk = (x - startX) * 2; // Scroll speed multiplier
-                    navWrapper.scrollLeft = scrollLeft - walk;
-                });
-
-                // Optional: Add keyboard navigation for accessibility
-                navWrapper.addEventListener('keydown', function(e) {
-                    const scrollAmount = 100;
-
-                    if (e.key === 'ArrowLeft') {
-                        navWrapper.scrollLeft -= scrollAmount;
-                        e.preventDefault();
-                    } else if (e.key === 'ArrowRight') {
-                        navWrapper.scrollLeft += scrollAmount;
-                        e.preventDefault();
-                    }
-                });
-
-                // Set tabindex for keyboard accessibility
-                navWrapper.setAttribute('tabindex', '0');
-                navWrapper.setAttribute('role', 'navigation');
-                navWrapper.setAttribute('aria-label', 'Main navigation');
-            }
         });
     </script>
 </body>
