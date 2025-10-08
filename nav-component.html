@@ -1,0 +1,221 @@
+<!-- ====== GLASSY NAVIGATION ====== -->
+<nav class="nav-wrapper">
+    <div class="nav-container">
+        <a href="index.html" class="nav-brand">UXlyzer</a>
+
+        <!-- Hamburger Button -->
+        <button class="hamburger" aria-label="Toggle navigation menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
+        <!-- Navigation Menu -->
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
+            <li class="nav-item"><a href="define.html" class="nav-link">Define</a></li>
+            <li class="nav-item"><a href="design.html" class="nav-link">Design</a></li>
+            <li class="nav-item"><a href="learnings.html" class="nav-link">Learnings</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<style>
+    .nav-items {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nav-item {
+        position: relative;
+    }
+
+    /* ====== GLASSY NAVIGATION ====== */
+    .nav-wrapper {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: auto;
+        max-width: 90vw;
+    }
+
+    .nav-container {
+        background: rgba(16, 16, 16, 0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        padding: 12px 24px;
+        display: flex;
+        gap: 32px;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    
+    .nav-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+        transition: left 0.6s ease;
+    }
+    .nav-container:hover::before {
+        left: 100%;
+    }
+    .nav-container:hover {
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2), 0 0 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-brand {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    /* Desktop Navigation */
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-link {
+        color: #a1a1a1;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 24px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #3b82f6;
+        background: rgba(59, 130, 246, 0.1);
+    }
+
+    .nav-link.active {
+        color: #3b82f6;
+        background: rgba(59, 130, 246, 0.15);
+    }
+
+    /* Hamburger Button - Hidden on Desktop */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 100%;
+        height: 3px;
+        background: #ffffff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+    }
+
+    /* Mobile Navigation */
+    @media (max-width: 768px) {
+        .nav-wrapper {
+            left: 20px;
+            right: 20px;
+            transform: none;
+            width: auto;
+        }
+
+        .nav-container {
+            padding: 12px 20px;
+        }
+
+        /* Show hamburger on mobile */
+        .hamburger {
+            display: flex;
+        }
+
+        /* Hide desktop menu on mobile */
+        .nav-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            right: 20px;
+            background: rgba(16, 16, 16, 0.95);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 24px;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            z-index: 1001;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        /* Show menu when active */
+        .nav-menu.active {
+            display: flex !important;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a1a1a1;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger animation when active */
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+    }
+</style>
