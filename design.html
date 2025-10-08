@@ -45,6 +45,7 @@
             line-height: 1.6;
             font-size: 16px;
             overflow-x: hidden;
+            padding-top: 100px;
         }
         
         .sticky-next-steps {
@@ -73,99 +74,6 @@
         }
         /* Navigation Styles (same as index.html) */
         
-        .nav-wrapper {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: auto;
-            max-width: 90vw;
-        }
-        
-        .nav-container {
-            background: rgba(16, 16, 16, 0.8);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 50px;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .nav-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .nav-container:hover::before {
-            left: 100%;
-        }
-        
-        .nav-container:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2), 0 0 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        }
-        
-        .nav-brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-            white-space: nowrap;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .nav-items {
-            display: flex;
-            list-style: none;
-            gap: 24px;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-item {
-            position: relative;
-        }
-        
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 24px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-            white-space: nowrap;
-        }
-        
-        .nav-link:hover {
-            color: var(--accent);
-            background: rgba(59, 130, 246, 0.1);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-        }
-        
-        .nav-link.active {
-            color: var(--accent);
-            background: rgba(59, 130, 246, 0.15);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
         /* Section Styles */
         
         .section {
@@ -431,23 +339,6 @@
         /* Responsive Design */
         
         @media (max-width: 768px) {
-            .nav-wrapper {
-                left: 20px;
-                right: 20px;
-                transform: none;
-                width: auto;
-            }
-            .nav-container {
-                gap: 20px;
-                padding: 10px 20px;
-            }
-            .nav-items {
-                gap: 16px;
-            }
-            .nav-link {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
             .section-container {
                 padding: 0 20px;
             }
@@ -499,23 +390,10 @@
 </head>
 
 <body>
-    <!-- Modern Glassy Navigation -->
-    <div class="nav-wrapper">
-        <nav class="nav-container">
-            <a href="index.html" class="nav-brand">UXlyzer</a>
-            <ul class="nav-items">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
-                <li class="nav-item"><a href="define.html" class="nav-link">Define</a></li>
-                <li class="nav-item"><a href="design.html" class="nav-link active">Design</a></li>
-                <li class="nav-item"><a href="learnings.html" class="nav-link">Learnings</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
+    <!-- ====== GLASSY NAVIGATION ====== -->
+    <div id="nav-container"></div>
 
     <!-- Design Section -->
-    <section class="section">
         <div class="section-container">
             <div class="section-header fade-in">
                 <div class="section-eyebrow">03. Design</div>
@@ -831,6 +709,84 @@
             console.log('UXlyzer Define - Anas Albaloshi');
         });
     </script>
+    <script>
+// ====== UNIVERSAL NAVIGATION LOADER ======
+// Add this script to EVERY page
+
+// Load the navigation component
+fetch('nav-component.html')
+    .then(response => {
+        if (!response.ok) throw new Error('Navigation not found');
+        return response.text();
+    })
+    .then(html => {
+        const container = document.getElementById('nav-container');
+        // Remove any script tags from the HTML
+        const htmlWithoutScripts = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        container.innerHTML = htmlWithoutScripts;
+        
+        // Initialize navbar functionality
+        initNavbar();
+    })
+    .catch(error => {
+        console.error('Navigation load failed:', error);
+        document.getElementById('nav-container').innerHTML = `
+            <nav style="background: #0a0a0a; color: white; padding: 20px; text-align: center; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
+                <p>UXlyzer - <a href="index.html" style="color: #3b82f6;">Go Home</a></p>
+            </nav>
+        `;
+    });
+
+// Navbar functionality
+function initNavbar() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        // Toggle menu when hamburger is clicked
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target);
+            const isClickOnHamburger = hamburger.contains(event.target);
+            
+            if (!isClickInsideNav && !isClickOnHamburger && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // ====== AUTO-HIGHLIGHT CURRENT PAGE ======
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    }
+}
+</script>
 </body>
 
 </html>
