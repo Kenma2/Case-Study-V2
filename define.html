@@ -1475,29 +1475,7 @@
 
 <body>
     <!-- ====== GLASSY NAVIGATION ====== -->
-    <nav class="nav-wrapper">
-        <div class="nav-container">
-            <!--    -->
-            <a href="index.html" class="nav-brand">UXlyzer</a>
-
-            <!-- Hamburger Button -->
-            <button class="hamburger" aria-label="Toggle navigation menu">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-
-            <!-- Navigation Menu -->
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="research.html" class="nav-link">Research</a></li>
-                <li class="nav-item"><a href="define.html" class="nav-link active">Define</a></li>
-                <li class="nav-item"><a href="design.html" class="nav-link">Design</a></li>
-                <li class="nav-item"><a href="learnings.html" class="nav-link">Learnings</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="nav-container"></div>
 
     <!-- ====== CONTENT SECTIONS ====== -->
         <!--
@@ -1939,6 +1917,86 @@
     <div id="footer-container"></div>
     <!--Progress Bar-->
     <div class="sticky-next-steps"></div>
+
+    <!-- for nav bar-->
+     <script>
+// ====== UNIVERSAL NAVIGATION LOADER ======
+// Add this script to EVERY page
+
+// Load the navigation component
+fetch('nav-component.html')
+    .then(response => {
+        if (!response.ok) throw new Error('Navigation not found');
+        return response.text();
+    })
+    .then(html => {
+        const container = document.getElementById('nav-container');
+        // Remove any script tags from the HTML
+        const htmlWithoutScripts = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        container.innerHTML = htmlWithoutScripts;
+        
+        // Initialize navbar functionality
+        initNavbar();
+    })
+    .catch(error => {
+        console.error('Navigation load failed:', error);
+        document.getElementById('nav-container').innerHTML = `
+            <nav style="background: #0a0a0a; color: white; padding: 20px; text-align: center; position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
+                <p>UXlyzer - <a href="index.html" style="color: #3b82f6;">Go Home</a></p>
+            </nav>
+        `;
+    });
+
+// Navbar functionality
+function initNavbar() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger && navMenu) {
+        // Toggle menu when hamburger is clicked
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = navMenu.contains(event.target);
+            const isClickOnHamburger = hamburger.contains(event.target);
+            
+            if (!isClickInsideNav && !isClickOnHamburger && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // ====== AUTO-HIGHLIGHT CURRENT PAGE ======
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    }
+}
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const stickyFooter = document.querySelector('.sticky-next-steps');
@@ -2085,4 +2143,3 @@
     </script>
 </body>
 </html>
-
